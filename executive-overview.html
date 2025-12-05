@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamieson I. Gill - Executive Overview</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5M0625NPF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-C5M0625NPF');
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .profile-image-container {
+            width: 250px;
+            height: 250px;
+        }
+
+        .profile-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 6px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            background: #4a90e2;
+        }
+
+        .header-content h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header-content .title {
+            font-size: 1.5em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary {
+            padding: 50px 40px;
+            background: #f8f9fa;
+        }
+
+        .summary h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .summary p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 50px 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .highlights {
+            padding: 50px 40px;
+            background: white;
+        }
+
+        .highlights h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .highlight-item {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .highlight-item strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .expertise {
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+        }
+
+        .expertise h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid white;
+            padding-bottom: 10px;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .expertise-category {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .expertise-category h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .expertise-category ul {
+            list-style: none;
+        }
+
+        .expertise-category li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .expertise-category li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+        }
+
+        .testimonials {
+            padding: 50px 40px;
+            background: #f8f9fa;
+        }
+
+        .testimonials h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .testimonial-card:before {
+            content: '"';
+            font-size: 4em;
+            color: #3498db;
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: Georgia, serif;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .author {
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: right;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .certifications {
+            padding: 50px 40px;
+            background: white;
+        }
+
+        .certifications h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .cert-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-color: #3498db;
+        }
+
+        .ai-cert {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-color: #667eea;
+        }
+
+        .cert-badge {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .cert-card h3 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .cert-card ul {
+            list-style: none;
+        }
+
+        .cert-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .cert-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .credly-link {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .credly-link p {
+            color: white;
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        .credly-link a {
+            color: white;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .credly-link a:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                grid-template-columns: 1fr;
+                text-align: center;
+                justify-items: center;
+            }
+
+            .header-content h1 {
+                font-size: 2em;
+            }
+
+            .contact-info {
+                justify-content: center;
+            }
+
+            .highlight-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="profile-image-container">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Crect fill='%234a90e2' width='250' height='250'/%3E%3Ctext x='50%25' y='50%25' font-size='100' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3EJG%3C/text%3E%3C/svg%3E" alt="Jamieson I. Gill" class="profile-image">
+            </div>
+            <div class="header-content">
+                <h1>Jamieson I. Gill</h1>
+                <div class="title">Virtual CIO/CTO | Enterprise Architect | AI Innovation Leader</div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>jamieson@acidni.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>(720) 412-5258</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🔗</span>
+                        <span>LinkedIn: jamiesongill</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🌐</span>
+                        <span>Denver, CO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h2>Executive Summary</h2>
+            <p>Strategic technology leader with 25+ years of experience delivering transformative IT solutions as a Virtual CIO/CTO, Enterprise Architect, and Full Stack Developer. Proven track record of modernizing enterprise architectures, leading cloud migrations, driving digital transformation initiatives, and architecting mission-critical systems that process hundreds of millions in transactions. Expert in Azure cloud-native development, systems integration, and building innovative solutions that drive business value across Fortune 500 companies and government agencies.</p>
+            <p style="margin-top: 15px;"><strong>AI Innovation Focus:</strong> Currently specializing in Agentic AI architecture and implementation, certified in cutting-edge AI solution design. Pioneering the integration of AI capabilities into enterprise architectures to drive next-generation business transformation.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">25+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">$500M+</div>
+                <div class="stat-label">Transaction Volume</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Enterprise Projects</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
+        </div>
+
+        <div class="highlights">
+            <h2>Career Highlights</h2>
+            <div class="highlight-grid">
+                <div class="highlight-item">
+                    <strong>Enterprise Architecture Leadership</strong>
+                    Led modernization of legacy systems to cloud-native architectures for Fortune 500 clients, improving scalability and reducing operational costs by 40%
+                </div>
+                <div class="highlight-item">
+                    <strong>AI & Innovation</strong>
+                    Pioneering Agentic AI implementation strategies, certified in advanced AI solution architecture, driving next-generation business intelligence and automation
+                </div>
+                <div class="highlight-item">
+                    <strong>Cloud Migration Excellence</strong>
+                    Architected and executed complex Azure cloud migrations for enterprise clients, achieving 99.9% uptime and seamless cutover with zero business disruption
+                </div>
+                <div class="highlight-item">
+                    <strong>Financial Systems Expert</strong>
+                    Designed and implemented mission-critical payment processing systems handling $500M+ in annual transactions with enterprise-grade security and compliance
+                </div>
+                <div class="highlight-item">
+                    <strong>Digital Transformation</strong>
+                    Led cross-functional teams in implementing modern DevOps practices, CI/CD pipelines, and agile methodologies, accelerating delivery by 60%
+                </div>
+                <div class="highlight-item">
+                    <strong>Strategic Technology Advisory</strong>
+                    Provided Virtual CIO/CTO services to multiple organizations, aligning technology strategy with business objectives and driving measurable ROI
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <h2>Client Testimonials</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="quote">
+                        "Jamieson's expertise in enterprise architecture and cloud technologies was instrumental in our digital transformation. His strategic vision and technical depth helped us modernize our entire infrastructure while maintaining business continuity."
+                    </div>
+                    <div class="author">— CTO, Fortune 500 Financial Services Company</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote">
+                        "Working with Jamieson was transformative for our organization. His ability to bridge business needs with technical solutions, combined with his hands-on development skills, delivered results that exceeded our expectations."
+                    </div>
+                    <div class="author">— VP of Technology, Healthcare Technology Firm</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote">
+                        "Jamieson's approach to AI integration is both practical and innovative. His deep understanding of enterprise architecture combined with cutting-edge AI expertise positioned our company at the forefront of industry innovation."
+                    </div>
+                    <div class="author">— CEO, SaaS Technology Company</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="expertise">
+            <h2>Core Expertise</h2>
+            <div class="expertise-grid">
+                <div class="expertise-category">
+                    <h3>🎯 Strategic Leadership</h3>
+                    <ul>
+                        <li>Virtual CIO/CTO Services</li>
+                        <li>Enterprise Architecture</li>
+                        <li>Digital Transformation</li>
+                        <li>Technology Strategy</li>
+                        <li>IT Governance</li>
+                    </ul>
+                </div>
+                <div class="expertise-category">
+                    <h3>🤖 AI & Innovation</h3>
+                    <ul>
+                        <li>Agentic AI Architecture</li>
+                        <li>AI Solution Design</li>
+                        <li>Machine Learning Integration</li>
+                        <li>Intelligent Automation</li>
+                        <li>AI Strategy & Implementation</li>
+                    </ul>
+                </div>
+                <div class="expertise-category">
+                    <h3>☁️ Cloud & Infrastructure</h3>
+                    <ul>
+                        <li>Azure Architecture & Migration</li>
+                        <li>Cloud-Native Development</li>
+                        <li>Microservices Architecture</li>
+                        <li>DevOps & CI/CD</li>
+                        <li>Infrastructure as Code</li>
+                    </ul>
+                </div>
+                <div class="expertise-category">
+                    <h3>💻 Development Excellence</h3>
+                    <ul>
+                        <li>Full Stack Development</li>
+                        <li>.NET / C# / ASP.NET Core</li>
+                        <li>React / Angular / Vue.js</li>
+                        <li>SQL Server / PostgreSQL</li>
+                        <li>RESTful APIs / GraphQL</li>
+                    </ul>
+                </div>
+                <div class="expertise-category">
+                    <h3>🔗 Integration & Data</h3>
+                    <ul>
+                        <li>Enterprise Integration Patterns</li>
+                        <li>API Design & Management</li>
+                        <li>Data Architecture</li>
+                        <li>ETL Processes</li>
+                        <li>Message Queue Systems</li>
+                    </ul>
+                </div>
+                <div class="expertise-category">
+                    <h3>🔒 Security & Compliance</h3>
+                    <ul>
+                        <li>Enterprise Security Architecture</li>
+                        <li>Identity & Access Management</li>
+                        <li>Compliance (PCI-DSS, HIPAA)</li>
+                        <li>Security Best Practices</li>
+                        <li>Risk Management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="certifications">
+            <h2>Current Certifications & Credentials</h2>
+            <div class="cert-grid">
+                <div class="cert-card ai-cert">
+                    <div class="cert-badge">🤖</div>
+                    <h3>AI & Agentic Systems</h3>
+                    <ul>
+                        <li>Agentic AI Certification</li>
+                        <li>AI Solution Architecture</li>
+                        <li>Machine Learning Fundamentals</li>
+                        <li>Prompt Engineering Expert</li>
+                    </ul>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-badge">☁️</div>
+                    <h3>Cloud & DevOps</h3>
+                    <ul>
+                        <li>Microsoft Azure Certified</li>
+                        <li>Azure Solutions Architect</li>
+                        <li>DevOps Professional</li>
+                        <li>Kubernetes Administrator</li>
+                    </ul>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-badge">🏗️</div>
+                    <h3>Architecture & Leadership</h3>
+                    <ul>
+                        <li>Enterprise Architecture</li>
+                        <li>TOGAF Certified</li>
+                        <li>Agile/Scrum Master</li>
+                        <li>IT Service Management</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="credly-link">
+                <p>View all certifications and badges: <a href="https://www.credly.com/users/jamieson-gill" target="_blank">credly.com/users/jamieson-gill</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
