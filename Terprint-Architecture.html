@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terprint Architecture Documentation v2.5.3</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f3460;
+            --text-primary: #eaeaea;
+            --text-secondary: #a0a0a0;
+            --accent: #e94560;
+            --accent-secondary: #533483;
+            --border: #2a2a4a;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --doc-version: "2.5.3";
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        /* Audience Selector Styles */
+        .audience-selector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .audience-selector label {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .audience-selector select {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--accent);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            cursor: pointer;
+            min-width: 250px;
+            transition: all 0.3s ease;
+        }
+        
+        .audience-selector select:hover {
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.3);
+        }
+        
+        .audience-selector select:focus {
+            outline: none;
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+        }
+        
+        .audience-description {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-style: italic;
+            transition: all 0.3s ease;
+        }
+        
+        /* Section Styles */
+        section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        section.hidden {
+            display: none;
+        }
+        
+        section h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        section h3 {
+            color: var(--text-primary);
+            margin: 20px 0 15px 0;
+        }
+        
+        /* Audience Badge */
+        .audience-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+            text-transform: uppercase;
+        }
+        
+        .badge-all { background: var(--accent); color: white; }
+        .badge-developer { background: #3b82f6; color: white; }
+        .badge-devops { background: #8b5cf6; color: white; }
+        .badge-data_analyst { background: #10b981; color: white; }
+        .badge-business_stakeholder { background: #f59e0b; color: black; }
+        .badge-security_auditor { background: #ef4444; color: white; }
+        .badge-user { background: #06b6d4; color: black; }
+        .badge-customer { background: #ec4899; color: white; }
+        
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--bg-tertiary);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: rgba(233, 69, 96, 0.1);
+        }
+        
+        /* Diagram Container */
+        .diagram-container {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Pipeline Stages */
+        .pipeline-stage {
+            background: var(--bg-tertiary);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .pipeline-stage h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .pipeline-stage ul {
+            margin-left: 20px;
+        }
+        
+        .pipeline-stage li {
+            margin: 8px 0;
+            color: var(--text-secondary);
+        }
+        
+        /* Code blocks */
+        code {
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: var(--success);
+        }
+        
+        pre {
+            background: var(--bg-tertiary);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid var(--border);
+            margin-top: 40px;
+            color: var(--text-secondary);
+        }
+        
+        /* Links */
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent-secondary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            section {
+                padding: 20px;
+            }
+            
+            .audience-selector {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .audience-selector select {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 Terprint Architecture Documentation</h1>
+            <p class="subtitle">Cannabis Product Fingerprinting System - Technical Reference</p>
+            <p class="subtitle" style="margin-top: 10px; font-size: 0.9rem;">Version 2.5.3 | December 2025</p>
+        </header>
+        
+        <!-- Audience Selector -->
+        <div class="audience-selector">
+            <label for="audienceSelect">📋 Select Your Role:</label>
+            <select id="audienceSelect" onchange="filterByAudience()">
+                <option value="all">All Audiences (Complete Documentation)</option>
+                <option value="developer">👨‍💻 Developer - Code, APIs, Local Setup</option>
+                <option value="devops">🔧 DevOps Engineer - Deployment, CI/CD, Infrastructure</option>
+                <option value="data_analyst">📊 Data Analyst - Schemas, Queries, Power BI</option>
+                <option value="business_stakeholder">💼 Business Stakeholder - Capabilities, Coverage</option>
+                <option value="security_auditor">🔒 Security Auditor - Identity, Secrets, Compliance</option>
+                <option value="user">👤 User - Website Features, How to Use</option>
+                <option value="customer">🛒 Customer - Product Info, Pricing, Benefits</option>
+            </select>
+        </div>
+        
+        <div id="audienceDescription" class="audience-description">
+            Viewing complete documentation for all audiences. Select a specific role above to filter content.
+        </div>
+        
+        <!-- System Overview - All Audiences -->
+        <section data-audience="all" id="overview">
+            <h2>System Overview <span class="audience-badge badge-all">All</span></h2>
+            <p>Terprint is a cannabis product fingerprinting system that extracts, processes, and analyzes Certificate of Analysis (COA) data from dispensary websites across Florida. The system provides unique product identification and data visualization through Power BI dashboards.</p>
+            
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Automated Data Collection:</strong> Scheduled extraction of product and COA data</li>
+                <li><strong>Multi-Dispensary Support:</strong> Unified processing for multiple dispensary formats</li>
+                <li><strong>Fingerprint Generation:</strong> Unique identification for product tracking</li>
+                <li><strong>Analytics Dashboard:</strong> Power BI integration for insights</li>
+            </ul>
+        </section>
+        
+        <!-- Tech Stack - Developer, DevOps -->
+        <section data-audience="developer devops" id="tech-stack">
+            <h2>Technology Stack <span class="audience-badge badge-developer">Developer</span> <span class="audience-badge badge-devops">DevOps</span></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Technology</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Runtime</td>
+                        <td>Python 3.12</td>
+                        <td>Core application development</td>
+                    </tr>
+                    <tr>
+                        <td>Functions</td>
+                        <td>Azure Functions v4</td>
+                        <td>Serverless compute for data pipelines</td>
+                    </tr>
+                    <tr>
+                        <td>Storage</td>
+                        <td>Azure Blob Storage</td>
+                        <td>Raw data and processed results</td>
+                    </tr>
+                    <tr>
+                        <td>Secrets</td>
+                        <td>Azure Key Vault</td>
+                        <td>Secure credential management</td>
+                    </tr>
+                    <tr>
+                        <td>Monitoring</td>
+                        <td>Application Insights</td>
+                        <td>Telemetry and diagnostics</td>
+                    </tr>
+                    <tr>
+                        <td>CI/CD</td>
+                        <td>Azure DevOps</td>
+                        <td>Build and release pipelines</td>
+                    </tr>
+                    <tr>
+                        <td>Web</td>
+                        <td>Blazor Server (.NET 8)</td>
+                        <td>Terprint Website application</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics</td>
+                        <td>Power BI</td>
+                        <td>Data visualization and reporting</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Audiences Reference - All -->
+        <section data-audience="all" id="audiences">
+            <h2>Documentation Audiences <span class="audience-badge badge-all">All</span></h2>
+            <p>This documentation is designed for multiple audiences. Use the dropdown above to filter content for your role:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Audience</th>
+                        <th>Focus Areas</th>
+                        <th>Technical Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>👨‍💻 Developer</td>
+                        <td>Code structure, APIs, local development setup</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>🔧 DevOps Engineer</td>
+                        <td>Deployment, CI/CD, infrastructure configuration</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>📊 Data Analyst</td>
+                        <td>Data schemas, query patterns, Power BI</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td>💼 Business Stakeholder</td>
+                        <td>System capabilities, coverage, costs</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>🔒 Security Auditor</td>
+                        <td>Identity management, secrets, compliance</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>👤 User</td>
+                        <td>Website features, how to use the system</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>🛒 Customer</td>
+                        <td>Product information, pricing, benefits</td>
+                        <td>None</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Pipeline Stages - DevOps, Developer -->
+        <section data-audience="developer devops" id="pipeline">
+            <h2>Data Pipeline Stages <span class="audience-badge badge-developer">Developer</span> <span class="audience-badge badge-devops">DevOps</span></h2>
+            
+            <div class="pipeline-stage">
+                <h4>Stage 1: Menu Download</h4>
+                <ul>
+                    <li>Triggers on schedule via Azure Functions timer</li>
+                    <li>Downloads menu data from dispensary APIs/websites</li>
+                    <li>Stores raw JSON in Azure Blob Storage</li>
+                    <li>Handles rate limiting and retry logic</li>
+                </ul>
+            </div>
+            
+            <div class="pipeline-stage">
+                <h4>Stage 2: COA Extraction</h4>
+                <ul>
+                    <li>Processes raw menu data to identify COA links</li>
+                    <li>Downloads and parses PDF/HTML COA documents</li>
+                    <li>Extracts cannabinoid and terpene profiles</li>
+                    <li>Normalizes data across dispensary formats</li>
+                </ul>
+            </div>
+            
+            <div class="pipeline-stage">
+                <h4>Stage 3: Data Processing</h4>
+                <ul>
+                    <li>Validates extracted data quality</li>
+                    <li>Generates unique product fingerprints</li>
+                    <li>Calculates derived metrics and scores</li>
+                    <li>Prepares data for analytics consumption</li>
+                </ul>
+            </div>
+            
+            <div class="pipeline-stage">
+                <h4>Stage 4: Storage & Integration</h4>
+                <ul>
+                    <li>Stores processed data in structured format</li>
+                    <li>Updates Power BI datasets</li>
+                    <li>Triggers downstream notifications</li>
+                    <li>Archives historical data for trending</li>
+                </ul>
+            </div>
+            
+            <div class="pipeline-stage">
+                <h4>Stage 5: Visualization</h4>
+                <ul>
+                    <li>Power BI dashboards refresh automatically</li>
+                    <li>Web application displays current data</li>
+                    <li>Alerts generated for anomalies</li>
+                    <li>Reports distributed to stakeholders</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Security Section - Security Auditor, DevOps -->
+        <section data-audience="security_auditor devops" id="security">
+            <h2>Security Architecture <span class="audience-badge badge-security_auditor">Security</span> <span class="audience-badge badge-devops">DevOps</span></h2>
+            
+            <h3>Identity & Access Management</h3>
+            <ul>
+                <li><strong>Managed Identity:</strong> System-assigned managed identities for Azure Functions</li>
+                <li><strong>RBAC:</strong> Role-based access control for all Azure resources</li>
+                <li><strong>Service Principals:</strong> DevOps service connections with minimal permissions</li>
+            </ul>
+            
+            <h3>Secrets Management</h3>
+            <ul>
+                <li><strong>Key Vault:</strong> All secrets stored in Azure Key Vault</li>
+                <li><strong>Reference Pattern:</strong> Functions use Key Vault references, not direct secrets</li>
+                <li><strong>Rotation:</strong> Automated secret rotation policies</li>
+            </ul>
+            
+            <h3>Network Security</h3>
+            <ul>
+                <li><strong>HTTPS Only:</strong> All endpoints require TLS 1.2+</li>
+                <li><strong>Private Endpoints:</strong> Storage and Key Vault accessible via private endpoints</li>
+                <li><strong>IP Restrictions:</strong> Function apps have IP-based access rules</li>
+            </ul>
+        </section>
+        
+        <!-- Data Schemas - Data Analyst, Developer -->
+        <section data-audience="data_analyst developer" id="data-schemas">
+            <h2>Data Schemas <span class="audience-badge badge-data_analyst">Data Analyst</span> <span class="audience-badge badge-developer">Developer</span></h2>
+            
+            <h3>Product Data Structure</h3>
+            <pre><code>{
+    "product_id": "string (unique identifier)",
+    "dispensary": "string (source dispensary)",
+    "name": "string (product name)",
+    "category": "string (flower, concentrate, etc.)",
+    "strain_type": "string (indica, sativa, hybrid)",
+    "thc_percentage": "float",
+    "cbd_percentage": "float",
+    "terpene_profile": {
+        "myrcene": "float",
+        "limonene": "float",
+        "caryophyllene": "float"
+    },
+    "fingerprint": "string (generated hash)",
+    "extracted_at": "datetime",
+    "coa_url": "string (source document)"
+}</code></pre>
+            
+            <h3>Supported Dispensaries</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dispensary</th>
+                        <th>Format</th>
+                        <th>Update Frequency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Trulieve</td><td>JSON API</td><td>Daily</td></tr>
+                    <tr><td>Curaleaf</td><td>HTML Scrape</td><td>Daily</td></tr>
+                    <tr><td>MÜV</td><td>JSON API</td><td>Daily</td></tr>
+                    <tr><td>Sunnyside</td><td>JSON API</td><td>Daily</td></tr>
+                    <tr><td>Fluent</td><td>HTML Scrape</td><td>Daily</td></tr>
+                    <tr><td>The Flowery</td><td>JSON API</td><td>Daily</td></tr>
+                    <tr><td>Cookies</td><td>JSON API</td><td>Daily</td></tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- User Guide - User -->
+        <section data-audience="user" id="user-guide">
+            <h2>User Guide <span class="audience-badge badge-user">User</span></h2>
+            
+            <h3>Getting Started</h3>
+            <p>Welcome to Terprint! This system helps you find and compare cannabis products across Florida dispensaries based on their chemical profiles.</p>
+            
+            <h3>How to Use the Website</h3>
+            <ul>
+                <li><strong>Search Products:</strong> Use the search bar to find products by name or strain</li>
+                <li><strong>Filter by Dispensary:</strong> Select one or more dispensaries to narrow results</li>
+                <li><strong>Compare Profiles:</strong> View side-by-side terpene and cannabinoid profiles</li>
+                <li><strong>View COA Details:</strong> Click any product to see its full Certificate of Analysis</li>
+                <li><strong>Save Favorites:</strong> Bookmark products for quick access later</li>
+            </ul>
+            
+            <h3>Understanding Fingerprints</h3>
+            <p>Each product has a unique "fingerprint" based on its chemical composition. Products with similar fingerprints will have similar effects, even if they have different names at different dispensaries.</p>
+            
+            <h3>Tips for Best Results</h3>
+            <ul>
+                <li>Check data freshness - products are updated daily</li>
+                <li>Use filters to narrow down large result sets</li>
+                <li>Compare multiple products before making decisions</li>
+            </ul>
+        </section>
+        
+        <!-- Customer Info - Customer -->
+        <section data-audience="customer" id="customer-info">
+            <h2>Product Information <span class="audience-badge badge-customer">Customer</span></h2>
+            
+            <h3>What is Terprint?</h3>
+            <p>Terprint is a cannabis product intelligence platform that helps you make informed purchasing decisions by providing detailed chemical analysis comparisons across multiple dispensaries.</p>
+            
+            <h3>Key Benefits</h3>
+            <ul>
+                <li><strong>Find Similar Products:</strong> Discover products with matching profiles at different price points</li>
+                <li><strong>Quality Assurance:</strong> View actual lab test results, not just marketing claims</li>
+                <li><strong>Price Comparison:</strong> Compare similar products across dispensaries</li>
+                <li><strong>Personalized Recommendations:</strong> Find products that match your preferences</li>
+            </ul>
+            
+            <h3>Coverage</h3>
+            <p>We currently track products from major Florida dispensaries including Trulieve, Curaleaf, MÜV, Sunnyside, Fluent, The Flowery, and Cookies. Our database is updated daily with the latest product information.</p>
+            
+            <h3>Pricing Plans</h3>
+            <p>Contact us for information about subscription plans and enterprise pricing. We offer individual, professional, and business tiers to meet your needs.</p>
+        </section>
+        
+        <!-- Business Overview - Business Stakeholder -->
+        <section data-audience="business_stakeholder customer" id="business-overview">
+            <h2>Business Overview <span class="audience-badge badge-business_stakeholder">Business</span> <span class="audience-badge badge-customer">Customer</span></h2>
+            
+            <h3>Market Coverage</h3>
+            <ul>
+                <li><strong>7 Major Dispensaries:</strong> Comprehensive coverage of Florida's medical cannabis market</li>
+                <li><strong>Daily Updates:</strong> Fresh data ensures accurate comparisons</li>
+                <li><strong>Historical Tracking:</strong> Trend analysis over time</li>
+            </ul>
+            
+            <h3>Value Proposition</h3>
+            <ul>
+                <li>Unique product fingerprinting technology</li>
+                <li>Cross-dispensary product matching</li>
+                <li>Automated data collection and processing</li>
+                <li>Self-service analytics via Power BI</li>
+            </ul>
+            
+            <h3>System Reliability</h3>
+            <ul>
+                <li><strong>Uptime:</strong> 99.9% availability target</li>
+                <li><strong>Data Freshness:</strong> Updated within 24 hours</li>
+                <li><strong>Scalability:</strong> Cloud-native architecture</li>
+            </ul>
+        </section>
+        
+        <!-- Architecture Diagram - Developer, DevOps -->
+        <section data-audience="developer devops" id="architecture-diagram">
+            <h2>System Architecture <span class="audience-badge badge-developer">Developer</span> <span class="audience-badge badge-devops">DevOps</span></h2>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+sequenceDiagram
+    participant Timer as Azure Timer
+    participant Func as Azure Functions
+    participant Storage as Blob Storage
+    participant KV as Key Vault
+    participant AI as App Insights
+    participant PBI as Power BI
+    
+    Timer->>Func: Trigger (Schedule)
+    Func->>KV: Get Secrets
+    KV-->>Func: API Keys
+    Func->>Storage: Download Previous Data
+    Func->>Func: Extract New Data
+    Func->>Storage: Store Raw JSON
+    Func->>Func: Process & Fingerprint
+    Func->>Storage: Store Processed Data
+    Func->>AI: Log Telemetry
+    Storage-->>PBI: Refresh Dataset
+                </div>
+            </div>
+        </section>
+        
+        <!-- High Level Architecture - All -->
+        <section data-audience="all" id="high-level-architecture">
+            <h2>High-Level Architecture <span class="audience-badge badge-all">All</span></h2>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+graph TB
+    subgraph Sources["Data Sources"]
+        D1[Trulieve]
+        D2[Curaleaf]
+        D3[MÜV]
+        D4[Other Dispensaries]
+    end
+    
+    subgraph Azure["Azure Cloud"]
+        AF[Azure Functions]
+        BS[Blob Storage]
+        KV[Key Vault]
+        AI[App Insights]
+    end
+    
+    subgraph Output["Outputs"]
+        PBI[Power BI]
+        WEB[Website]
+    end
+    
+    D1 --> AF
+    D2 --> AF
+    D3 --> AF
+    D4 --> AF
+    AF <--> BS
+    AF <--> KV
+    AF --> AI
+    BS --> PBI
+    BS --> WEB
+                </div>
+            </div>
+        </section>
+        
+        <!-- Dispensary Data Flow - Data Analyst -->
+        <section data-audience="data_analyst developer" id="dispensary-flow">
+            <h2>Dispensary Data Flow <span class="audience-badge badge-data_analyst">Data Analyst</span> <span class="audience-badge badge-developer">Developer</span></h2>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+flowchart LR
+    subgraph Input["Raw Input"]
+        API[API Response]
+        HTML[HTML Page]
+        PDF[PDF COA]
+    end
+    
+    subgraph Processing["Processing"]
+        Parse[Parser]
+        Extract[Extractor]
+        Normalize[Normalizer]
+        Fingerprint[Fingerprinter]
+    end
+    
+    subgraph Output["Output"]
+        JSON[Structured JSON]
+        Analytics[Analytics Ready]
+    end
+    
+    API --> Parse
+    HTML --> Parse
+    PDF --> Extract
+    Parse --> Normalize
+    Extract --> Normalize
+    Normalize --> Fingerprint
+    Fingerprint --> JSON
+    JSON --> Analytics
+                </div>
+            </div>
+        </section>
+        
+        <!-- Menu Explorer Workflow - DevOps Developer -->
+        <section data-audience="devops developer" id="menu-explorer-workflow">
+            <h2>Menu Explorer Workflow <span class="audience-badge badge-devops">DevOps</span> <span class="audience-badge badge-developer">Developer</span></h2>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+sequenceDiagram
+    participant Config as terprint-config
+    participant Explorer as Menu Explorer MI
+    participant DevOps as Azure DevOps
+    participant MenuDL as Menu Downloader
+    participant BatchProc as Batch Processor
+    
+    Note over Config,Explorer: Discovery Phase (mi-menu-explorer)
+    Explorer->>Config: Read discovery_targets
+    Explorer->>DevOps: Query existing Epics
+    Explorer->>DevOps: Create missing work items
+    Explorer->>Explorer: Discover API endpoints
+    Explorer->>Explorer: Enumerate store IDs
+    Explorer->>Explorer: Map fields to schema
+    Explorer->>Explorer: Validate data quality
+    Explorer->>DevOps: Update work item status
+    
+    Note over Explorer,BatchProc: Production Handoff
+    Explorer->>DevOps: Create Menu Downloader Story
+    Note right of DevOps: Assigned to: terprint-menu-downloader
+    Explorer->>DevOps: Create Batch Processor Story
+    Note right of DevOps: Assigned to: func-terprint-batchprocessor
+    Explorer->>Config: Move to production_dispensaries
+    
+    Note over MenuDL,BatchProc: Production Phase
+    MenuDL->>MenuDL: Configure scheduled downloads
+    BatchProc->>BatchProc: Configure batch processing
+    MenuDL->>DevOps: Close Menu Downloader Story
+    BatchProc->>DevOps: Close Batch Processor Story
+    Explorer->>DevOps: Close Epic
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stock API Workflow - Developer, User -->
+        <section data-audience="developer user" id="stock-api-workflow">
+            <h2>Stock Check API Workflow <span class="audience-badge badge-developer">Developer</span> <span class="audience-badge badge-user">User</span></h2>
+            
+            <h3>Real-Time Stock Check</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+sequenceDiagram
+    participant User as User Browser
+    participant Web as Terprint Website
+    participant Stock as Stock API<br/>(Menu Downloader)
+    participant Redis as Redis Cache
+    participant Dispo as Dispensary APIs<br/>(MÜV, Trulieve, etc.)
+    
+    Note over User,Dispo: Product Page Stock Check
+    User->>Web: View Product Page
+    Web->>Stock: GET /api/stock/{dispensary}/{batch_id}<br/>Headers: x-functions-key
+    Stock->>Redis: Check cache
+    
+    alt Cache Hit
+        Redis-->>Stock: Return cached stock data
+    else Cache Miss
+        Stock->>Dispo: Query inventory API
+        Dispo-->>Stock: Store availability + quantities
+        Stock->>Redis: Cache result (TTL: 60s)
+    end
+    
+    Stock-->>Web: Stock response with store locations
+    Web-->>User: Display stock status + nearest stores
+                </div>
+            </div>
+            
+            <h3>Cross-Dispensary Strain Search</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+sequenceDiagram
+    participant User as User Browser
+    participant Web as Terprint Website
+    participant Stock as Stock API<br/>(Menu Downloader)
+    participant Index as Strain Index<br/>(Redis)
+    participant MUV as MÜV API
+    participant TRU as Trulieve API
+    participant COO as Cookies API
+    participant FLO as Flowery API
+    
+    Note over User,FLO: "Find Gelato near me" Search
+    User->>Web: Search: "Gelato"<br/>Location: Orlando, FL<br/>Radius: 25 miles
+    Web->>Stock: GET /api/stock/search<br/>?strain=Gelato&lat=28.54&lng=-81.38&max_distance=25
+    
+    Stock->>Index: Find matching strains
+    Index-->>Stock: Matching batch IDs by dispensary
+    
+    par Parallel Stock Checks
+        Stock->>MUV: Check stock for Gelato batches
+        Stock->>TRU: Check stock for Gelato batches
+        Stock->>COO: Check stock for Gelato batches
+        Stock->>FLO: Check stock for Gelato batches
+    end
+    
+    MUV-->>Stock: Store availability
+    TRU-->>Stock: Store availability
+    COO-->>Stock: Store availability
+    FLO-->>Stock: Store availability
+    
+    Stock->>Stock: Filter by distance<br/>Sort by nearest
+    Stock-->>Web: Results: 12 stores within 25 miles
+    Web-->>User: Display map + store list<br/>sorted by distance
+                </div>
+            </div>
+            
+            <h3>Stock API Endpoints</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/api/stock/{dispensary}/{batch_id}</code></td>
+                        <td>GET</td>
+                        <td>Check stock for a specific product at all stores</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/stock/{dispensary}</code></td>
+                        <td>POST</td>
+                        <td>Bulk stock check for multiple batch IDs</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/stock/search</code></td>
+                        <td>GET</td>
+                        <td>Search by strain name across all dispensaries</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Response Includes</h3>
+            <ul>
+                <li><strong>Stock Status:</strong> In stock / Out of stock at each store</li>
+                <li><strong>Store Locations:</strong> Full address, lat/lng coordinates</li>
+                <li><strong>Distance:</strong> Miles from user (when location provided)</li>
+                <li><strong>Product Details:</strong> THC%, CBD%, price, category</li>
+                <li><strong>Store Info:</strong> Phone, hours, direct link to dispensary website</li>
+            </ul>
+        </section>
+        
+        <!-- DevOps Structure - DevOps -->
+        <section data-audience="devops" id="devops-structure">
+            <h2>DevOps Structure <span class="audience-badge badge-devops">DevOps</span></h2>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+graph TB
+    subgraph Repos["Repositories"]
+        R1[terprint-config]
+        R2[menu-downloader]
+        R3[coa-extractor]
+        R4[terprint-website]
+    end
+    
+    subgraph DevOps["Azure DevOps"]
+        P1[Build Pipelines]
+        P2[Release Pipelines]
+        A1[Artifacts Feed]
+    end
+    
+    subgraph Azure["Azure Resources"]
+        RG[Resource Group]
+        FA[Function Apps]
+        ST[Storage Accounts]
+        KV[Key Vault]
+    end
+    
+    R1 --> P1
+    R2 --> P1
+    R3 --> P1
+    R4 --> P1
+    P1 --> A1
+    A1 --> P2
+    P2 --> RG
+    RG --> FA
+    RG --> ST
+    RG --> KV
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2025 Acidni, LLC - All Rights Reserved</p>
+            <p>Last Updated: <span id="lastUpdated"></span></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Audience descriptions
+        const audienceDescriptions = {
+            'all': 'Viewing complete documentation for all audiences. Select a specific role above to filter content.',
+            'developer': '👨‍💻 Developer View: Showing code structure, APIs, technical implementation details, and local development setup.',
+            'devops': '🔧 DevOps View: Showing deployment pipelines, CI/CD configuration, infrastructure, and operational details.',
+            'data_analyst': '📊 Data Analyst View: Showing data schemas, query patterns, Power BI integration, and analytics information.',
+            'business_stakeholder': '💼 Business View: Showing system capabilities, coverage, costs, and high-level overview.',
+            'security_auditor': '🔒 Security View: Showing identity management, secrets handling, compliance, and security architecture.',
+            'user': '👤 User View: Showing website features, how to use the system, and practical guidance.',
+            'customer': '🛒 Customer View: Showing product information, pricing, benefits, and getting started information.'
+        };
+        
+        function filterByAudience() {
+            const selected = document.getElementById('audienceSelect').value;
+            const sections = document.querySelectorAll('section[data-audience]');
+            const descriptionEl = document.getElementById('audienceDescription');
+            
+            // Update description
+            descriptionEl.textContent = audienceDescriptions[selected] || audienceDescriptions['all'];
+            
+            sections.forEach(section => {
+                const audiences = section.getAttribute('data-audience').split(' ');
+                
+                if (selected === 'all' || audiences.includes('all') || audiences.includes(selected)) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#e94560',
+                primaryTextColor: '#eaeaea',
+                primaryBorderColor: '#533483',
+                lineColor: '#a0a0a0',
+                secondaryColor: '#16213e',
+                tertiaryColor: '#0f3460',
+                background: '#1a1a2e',
+                mainBkg: '#16213e',
+                secondBkg: '#0f3460',
+                border1: '#2a2a4a',
+                border2: '#533483',
+                arrowheadColor: '#e94560',
+                fontFamily: 'Segoe UI, sans-serif',
+                fontSize: '14px',
+                textColor: '#eaeaea',
+                actorTextColor: '#eaeaea',
+                actorLineColor: '#a0a0a0'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                useMaxWidth: true,
+                boxMargin: 10,
+                mirrorActors: false
+            }
+        });
+        
+        // Set last updated date
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    </script>
+</body>
+</html>
