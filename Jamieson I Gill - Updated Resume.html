@@ -1,0 +1,885 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamieson I. Gill - Resume</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .page {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px 50px;
+            position: relative;
+        }
+
+        .header-content {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            object-fit: cover;
+        }
+
+        .header-text h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-bottom: 15px;
+        }
+
+        .contact-bar {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            font-size: 0.95em;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .summary-section {
+            padding: 35px 50px;
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+        }
+
+        .summary-section h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .summary-section p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 1.7;
+        }
+
+        .content {
+            padding: 35px 50px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            font-weight: 600;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.05em;
+        }
+
+        .highlight-box p {
+            color: #666;
+            font-size: 0.95em;
+            margin: 0;
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .cert-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            text-align: center;
+        }
+
+        .cert-box.featured {
+            background: linear-gradient(135deg, #667eea30 0%, #764ba230 100%);
+            border-color: #5a67d8;
+        }
+
+        .cert-icon {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .cert-box h4 {
+            color: #2c3e50;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .cert-box p {
+            color: #666;
+            font-size: 0.85em;
+            margin: 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .skill-category h3 {
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            color: #555;
+            padding: 4px 0;
+            padding-left: 15px;
+            position: relative;
+            font-size: 0.95em;
+        }
+
+        .skill-category li:before {
+            content: "▪";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+        }
+
+        .experience-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .job-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .company {
+            font-size: 1.1em;
+            color: #3498db;
+            font-weight: 500;
+        }
+
+        .date-location {
+            font-size: 0.95em;
+            color: #666;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .experience-item ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .experience-item li {
+            margin-bottom: 8px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .experience-item p {
+            color: #555;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .education-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .education-box h3 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+        }
+
+        .education-box p {
+            color: #555;
+            margin: 5px 0;
+        }
+
+        /* Enhanced Print Pagination Controls */
+        @media print {
+            body { background: white; }
+            .page { box-shadow: none; max-width: 100%; }
+            .no-print { display: none !important; }
+            
+            /* Prevent breaking inside these elements */
+            .section, .experience-item, .highlight-box, .project-card, 
+            .testimonial-card, .education-box, .cert-box, .skill-category {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            /* Keep headers with their content */
+            .section-title {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            
+            /* Force new page before major sections if needed */
+            .section.new-page {
+                page-break-before: always;
+                break-before: always;
+            }
+            
+            /* Avoid orphaned headers */
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            
+            /* Keep lists together when possible */
+            ul, ol {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            /* If list is too long, at least keep list items together */
+            li {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            /* Expand collapsed sections for printing */
+            .collapsible-content {
+                display: block !important;
+                max-height: none !important;
+            }
+            
+            .toggle-btn {
+                display: none !important;
+            }
+            
+            /* Ensure proper margins for printing */
+            @page {
+                margin: 0.75in;
+                size: letter;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .profile-image {
+                margin: 0 auto;
+            }
+            .highlights-grid {
+                grid-template-columns: 1fr;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cert-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .experience-header {
+                flex-direction: column;
+            }
+            .date-location {
+                text-align: left;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <img src="images/jgill-profile.jpg" alt="Jamieson I. Gill" class="profile-image">
+                <div class="header-text">
+                    <h1>JAMIESON I. GILL</h1>
+                    <div class="tagline">Solution Architect | Enterprise Architect | Agentic AI Specialist</div>
+                    <div class="contact-bar">
+                        <span class="contact-item">📧 <a href="mailto:jgill@savitas.net">jgill@savitas.net</a></span>
+                        <span class="contact-item">🔗 linkedin.com/in/jamiesongill</span>
+                        <span class="contact-item">📍 Hastings, FL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Summary -->
+        <div class="summary-section">
+            <h2>Professional Summary</h2>
+            <p>
+                Innovative Solution Architect with 25+ years architecting enterprise solutions across Fortune 500 healthcare, aerospace, financial services, and government sectors. Deep expertise in Agentic AI architecture, cloud modernization (Azure IaaS/PaaS/iPaaS), CRM/ERP implementations, and ESRI ArcGIS platform solutions. Proven track record delivering complex systems integrations, business process automation, and digital transformation initiatives. Microsoft Gold Certified Partner with extensive experience in full-stack development, DevOps practices, and leading cross-functional teams.
+            </p>
+        </div>
+
+        <div class="content">
+            <!-- Key Achievements -->
+            <div class="section">
+                <h2 class="section-title">Key Achievements</h2>
+                <div class="highlights-grid">
+                    <div class="highlight-box">
+                        <strong>Hurricane Sandy Recovery</strong>
+                        <p>Led systems integration for NYC Rapid Repairs Program and NJ RenewJersey RREM, processing $100M+ in reconstruction. Mentioned in Mayor Bloomberg's press releases.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <strong>Orion Space Program</strong>
+                        <p>Managed Developer Operations Tools (DOT) and Software Engineering Process Group (SEPG) for Lockheed Martin's Orion Space Program, NASA collaboration.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <strong>ArMet Enterprise Solution</strong>
+                        <p>Lead Product Architect for architecture metrics tracking solution at Humana, deemed "not technically possible" - delivered successfully using PowerBI & ServiceNow.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <strong>Microsoft Gold Partner</strong>
+                        <p>Achieved Microsoft Gold Certified Partner status with ISV Software Solutions competency (2007). Developed applications listed in Azure Marketplace & AppSource.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <strong>Cloud Migration Excellence</strong>
+                        <p>Architected migration of 5 .NET applications from Wells Fargo private cloud to Azure in 3 months for Eastdil Secured, including security migration to Azure AD.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <strong>Cannabis Industry Innovation</strong>
+                        <p>Developed cloud-based applications for cannabis dispensaries including DriveDollar and Dispensary Time Saver with POS integration (Metrc, MJ Freeway, Adilas).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="section">
+                <h2 class="section-title">Certifications & Credentials</h2>
+                <div class="cert-grid">
+                    <div class="cert-box featured">
+                        <div class="cert-icon">🤖</div>
+                        <h4>Agentic AI Solution Architecture</h4>
+                        <p>Current</p>
+                    </div>
+                    <div class="cert-box featured">
+                        <div class="cert-icon">🚀</div>
+                        <h4>Agentic AI Accelerator</h4>
+                        <p>Participant</p>
+                    </div>
+                    <div class="cert-box featured">
+                        <div class="cert-icon">✓</div>
+                        <h4>Agentic AI Project Ready</h4>
+                        <p>Current</p>
+                    </div>
+                    <div class="cert-box">
+                        <div class="cert-icon">☁️</div>
+                        <h4>Azure Fundamentals</h4>
+                        <p>Microsoft Certified</p>
+                    </div>
+                    <div class="cert-box">
+                        <div class="cert-icon">🤖</div>
+                        <h4>Azure AI Fundamentals</h4>
+                        <p>Microsoft Certified</p>
+                    </div>
+                    <div class="cert-box">
+                        <div class="cert-icon">🔒</div>
+                        <h4>Security & Identity</h4>
+                        <p>Microsoft Certified</p>
+                    </div>
+                    <div class="cert-box">
+                        <div class="cert-icon">💼</div>
+                        <h4>Microsoft Small Business Specialist</h4>
+                        <p>Certified</p>
+                    </div>
+                    <div class="cert-box">
+                        <div class="cert-icon">💰</div>
+                        <h4>QuickBooks ProAdvisor</h4>
+                        <p>Intuit Certified</p>
+                    </div>
+                    <div class="cert-box">
+                        <div class="cert-icon">🌐</div>
+                        <h4>Cisco Small Business</h4>
+                        <p>Certified Specialist</p>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 15px; color: #666;">
+                    <strong>View all verified credentials:</strong> <a href="https://www.credly.com/users/jamieson-gill" style="color: #3498db;">credly.com/users/jamieson-gill</a>
+                </p>
+            </div>
+
+            <!-- Core Competencies -->
+            <div class="section">
+                <h2 class="section-title">Core Competencies</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>AI & Innovation</h3>
+                        <ul>
+                            <li>Agentic AI Architecture</li>
+                            <li>AI-Powered Applications</li>
+                            <li>Enterprise AI Integration</li>
+                            <li>Azure Cognitive Services</li>
+                            <li>Azure OpenAI</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Leadership</h3>
+                        <ul>
+                            <li>Virtual CIO/CTO</li>
+                            <li>Digital Transformation</li>
+                            <li>Enterprise Architecture</li>
+                            <li>Business Architecture</li>
+                            <li>Agile/SCRUM Methodology</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Enterprise Systems</h3>
+                        <ul>
+                            <li>Microsoft Dynamics CRM</li>
+                            <li>Salesforce.com</li>
+                            <li>ConnectWise</li>
+                            <li>Microsoft Dynamics GP</li>
+                            <li>ERP Implementation</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Cloud & DevOps</h3>
+                        <ul>
+                            <li>Azure IaaS/PaaS/IPaaS</li>
+                            <li>DevOps & CI/CD</li>
+                            <li>Azure DevOps/TFS</li>
+                            <li>Infrastructure as Code</li>
+                            <li>Docker/Containers</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Development</h3>
+                        <ul>
+                            <li>.NET (2.0-4.8) / .NET Core</li>
+                            <li>C# / VB.NET / ASP.NET</li>
+                            <li>Blazor / React / Angular</li>
+                            <li>REST/SOAP/WCF APIs</li>
+                            <li>JavaScript / TypeScript</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>SharePoint</h3>
+                        <ul>
+                            <li>SharePoint 2007-2019</li>
+                            <li>SharePoint Online</li>
+                            <li>Power Platform</li>
+                            <li>Power Automate</li>
+                            <li>InfoPath Forms</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Data & Analytics</h3>
+                        <ul>
+                            <li>SQL Server (2000-2019)</li>
+                            <li>Azure SQL Database</li>
+                            <li>Power BI & SSRS</li>
+                            <li>SSIS (ETL)</li>
+                            <li>Oracle / MySQL</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Integration</h3>
+                        <ul>
+                            <li>Systems Integration</li>
+                            <li>OAuth 2.0 / SSO</li>
+                            <li>Azure AD / B2C</li>
+                            <li>Microsoft BizTalk</li>
+                            <li>API Management</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>GIS & Geospatial</h3>
+                        <ul>
+                            <li>ESRI ArcGIS Platform</li>
+                            <li>ArcGIS Server & Online</li>
+                            <li>JavaScript API</li>
+                            <li>ArcSDE / Oracle</li>
+                            <li>Spatial Analysis</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Cannabis Tech</h3>
+                        <ul>
+                            <li>Metrc Integration</li>
+                            <li>MJ Freeway</li>
+                            <li>Adilas</li>
+                            <li>Dispensary POS Systems</li>
+                            <li>Compliance Systems</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Source Control</h3>
+                        <ul>
+                            <li>Git / GitHub</li>
+                            <li>Azure DevOps (TFS)</li>
+                            <li>Visual Studio Online</li>
+                            <li>Perforce</li>
+                            <li>CVS / SourceSafe</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Tools & IDEs</h3>
+                        <ul>
+                            <li>Visual Studio 2005-2022</li>
+                            <li>VS Code</li>
+                            <li>SSMS / SQL Tools</li>
+                            <li>Telerik DevCraft</li>
+                            <li>JIRA / Confluence</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Experience -->
+            <div class="section">
+                <h2 class="section-title">Professional Experience</h2>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Founder & CEO</div>
+                            <div class="company">Acidni Software Development</div>
+                        </div>
+                        <div class="date-location">August 2025 – Present</div>
+                    </div>
+                    <ul>
+                        <li>Founded software development company specializing in AI-powered enterprise solutions and cloud-native applications</li>
+                        <li>Developing next-generation business applications leveraging Agentic AI architecture</li>
+                        <li>Providing custom software development, enterprise architecture, and digital transformation consulting</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">President & Principal Consultant</div>
+                            <div class="company">Savitas Strategic Software Solutions (Microsoft Gold Partner)</div>
+                        </div>
+                        <div class="date-location">August 2002 – Present</div>
+                    </div>
+                    <ul>
+                        <li>Founded and currently lead company providing virtual CIO/CTO services and enterprise software solutions</li>
+                        <li>Achieved Microsoft Gold Certified Partner status with ISV Software Solutions competency (2007)</li>
+                        <li>Received Cisco small business award for best unified communication system sales in NYC (2008)</li>
+                        <li>Design and develop cloud-native applications listed in Microsoft AppSource and Azure Marketplace</li>
+                        <li>Architect enterprise solutions including CRM integrations, ERP implementations, and business process automation</li>
+                    </ul>
+                    
+                    <p><strong>Key Projects & Products:</strong></p>
+                    <ul>
+                        <li><strong>Savitas Data Integrator (2016-present):</strong> Cloud-based application for systems and data integration with OAuth and REST integrations. Integrates with Azure AD, Microsoft 365, Google Workspace, HubSpot, ConnectWise, Constant Contact, MailChimp. Listed in Constant Contact Marketplace and Azure AD Marketplace. PayPal REST API integration for payment processing.</li>
+                        <li><strong>DriveDollar & Dispensary Time Saver (2018-present):</strong> Cloud-based applications for cannabis dispensaries with online portals for customer reviews, product reservations, and real-time menu integration with POS systems (Metrc, MJ Freeway, Adilas).</li>
+                        <li><strong>Savitas Sales Accelerator (2014-2015):</strong> Hybrid cloud-based Sales/CRM application. Multi-tier architecture with ASP.NET web application hosted in Azure, backend Windows Service for data access, and Constant Contact integration module. Used Telerik controls for data presentation.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Solution Architect</div>
+                            <div class="company">Specific Gravity Group, Inc. (Remote)</div>
+                        </div>
+                        <div class="date-location">October 2024 – August 2025</div>
+                    </div>
+                    <ul>
+                        <li>Architected solutions for internal and client usage including Azure infrastructure design, build, and management</li>
+                        <li>Created new application development line of business and published Marketplace Leads to CRM to Azure Marketplace</li>
+                        <li>Developed Power BI reports and ConnectWise customizations for enterprise clients</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Solution Architect / Enterprise Architect</div>
+                            <div class="company">Tata Consultancy Services (TCS)</div>
+                        </div>
+                        <div class="date-location">October 2019 – November 2023</div>
+                    </div>
+                    <p><strong>Client: Humana Inc – Cloud Modernization</strong></p>
+                    <ul>
+                        <li>Lead Product Architect for ArMet – enterprise architecture metrics tracking solution deemed "not technically possible"</li>
+                        <li>Architected and developed OKR tracking system for Enterprise Architecture group with PowerBI integration</li>
+                        <li>Modernized Enterprise Architecture repository using ServiceNow integration with Orbus IServer</li>
+                        <li>Designed cloud archetypes and served on review board for all modernized application architectures</li>
+                        <li>Implemented process automation using O365 SharePoint, Power Platform, and Azure DevOps</li>
+                    </ul>
+                    <p><strong>Client: Eastdil Secured – Cloud Native Migration</strong></p>
+                    <ul>
+                        <li>Architected migration of 5 .NET applications from Wells Fargo private cloud to Azure in 3 months</li>
+                        <li>Merged 3 legacy document management systems into unified Azure storage solution</li>
+                        <li>Migrated user security to Azure Active Directory from Wells Fargo directory</li>
+                        <li>Led agile team, managed Azure DevOps repositories and work item tracking</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Adjunct Instructor</div>
+                            <div class="company">Arapahoe Community College</div>
+                        </div>
+                        <div class="date-location">August 2016 – December 2016</div>
+                    </div>
+                    <ul>
+                        <li>Taught CNG125, Computer Networking II class to prepare students for CompTIA Network+ exam</li>
+                        <li>Developed curriculum materials and lab exercises for hands-on network configuration</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Staff Software Engineer</div>
+                            <div class="company">Lockheed Martin Corporation - Orion Space Program</div>
+                        </div>
+                        <div class="date-location">March 2015 – December 2015</div>
+                    </div>
+                    <p><strong>Software Systems and Process Team</strong></p>
+                    <ul>
+                        <li>Managed Developer Operations Tools (DOT) for labs and Integrated Product Team (IPT) on Orion Space Program</li>
+                        <li>Managed approval process for software (COTS, FOSS, GOTS, MOTS) not approved on Orion program</li>
+                        <li>Managed approval and classification of developed software for usage on Orion program - processed 60 developed tools</li>
+                        <li>Designed, developed and implemented changes to JIRA for DOT project including custom fields and workflow programming</li>
+                        <li>Managed Software Engineering Process Group (SEPG) - ran weekly meetings with Lockheed, NASA, DCMA</li>
+                        <li>Managed updates to Software Development Plan (900+ pages)</li>
+                        <li>Designed and developed meeting management application in SharePoint to track meetings, topics, attendees, documents and comments</li>
+                        <li>Implemented process improvements to reduce processing time and increase data quality</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Systems Integration Solution Architect</div>
+                            <div class="company">RenewJersey Stronger RREM and LRRP Program (MBP/Gilbane / New Jersey DCA)</div>
+                        </div>
+                        <div class="date-location">May 2013 – May 2014</div>
+                    </div>
+                    <ul>
+                        <li>Developed strategic capability for Gilbane to communicate with NJ DCA's SSHIP organization and URS Corporation using XML web services as required in public RFP</li>
+                        <li>Selected for participation on RREM "Tiger Team" to accelerate home repair process for Hurricane Sandy recovery</li>
+                        <li>First RREM contractor to integrate with SSHIP - architected solution to process documents and data with Gilbane's internal building management system</li>
+                        <li>Implemented incoming data approval application using InfoPath Forms and SharePoint 2010 workflows</li>
+                        <li>Worked with other RREM contractors (URS Corporation, CB&I) to implement systems integration solutions for all contractors</li>
+                        <li>Implemented Rapid Application Development techniques to integrate with XML web services within days of interface availability</li>
+                        <li>Project Management Office meeting participation with CGI Inc Principal, NJ DCA CIO, RREM Systems Integration Team Leads, NJ DCA Internal Audit, ICF Corporation, Cohn Reznick</li>
+                        <li>Managed DNS, SSL certificates, Rackspace dedicated cloud environment, Cisco ASA firewall, Windows Server 2008 R2, SQL Server 2012 (SSIS/SSRS)</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Systems Integration Solution Architect</div>
+                            <div class="company">New York City Rapid Repairs Program (NYCRRP)</div>
+                        </div>
+                        <div class="date-location">December 2012 – December 2013</div>
+                    </div>
+                    <ul>
+                        <li><strong>After Care Case Management System Solution Architect</strong> - Mentioned in press releases from Mayor Bloomberg</li>
+                        <li>Developed application forms in InfoPath to capture case information and record case log of interactions with NYCRRP service recipients</li>
+                        <li>Developed SQL Server Reporting Services Report showing daily snapshot of activity and progress toward case closure</li>
+                        <li>Integrated After Case System with Contractor Portal</li>
+                        <li>SharePoint Contractor Portal where NYCRRP contractors accessed after care case details and assigned work orders</li>
+                        <li>Developed SharePoint workflows to support applications and integration between systems</li>
+                        <li>SQL Server Integration Services Package Development for data processing and validation</li>
+                        <li>Vendor relation management with GCR Software for hybrid system supporting both tablet and ERP-based contractors</li>
+                        <li>Designed data change approval process with variable logic to calculate appropriate approvers based on assigned data manager/contractor</li>
+                        <li>Architected integration solution for contractors not using tablets to integrate ERP systems with NYCRRP database</li>
+                        <li>Created Reporting Portals for NYCRRP Personnel, FEMA, NYC DOI, NYC DEP, NYC Mayor's Office, and NYCRRP Contractors</li>
+                        <li>Architected scanning solution using Kodak scanners and Kodak Capture Pro with Zonal OCR for real-time document processing</li>
+                        <li>Administered SharePoint Server 2010 Enterprise farm, SQL Server 2012 database cluster, DNS/SSL for nycrrp.com domain</li>
+                        <li>Systems Administration of all servers in Rackspace dedicated cloud environment including Cisco ASA firewall administration</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">SharePoint Developer/Administrator</div>
+                            <div class="company">Pennsylvania Department of Conservation and Natural Resources</div>
+                        </div>
+                        <div class="date-location">December 2011 – December 2012</div>
+                    </div>
+                    <ul>
+                        <li>Administered SharePoint Server 2010 Enterprise farm including web front end and database servers</li>
+                        <li>Developed interface to Google Analytics website usage data using SQL Server Integration Services for dashboard presentation</li>
+                        <li>Designed and developed interface to BMC Remedy AR system using SharePoint Business Data Connectivity Services for help desk reporting</li>
+                        <li>Developed integration solution connecting to Office of Administrations CMIC Human Resource Oracle database using SSIS, integrated data into SharePoint user profile service for Organization Chart</li>
+                        <li>Performed disaster recovery procedures on corrupted SharePoint content database - restored data to point of failure with no data loss</li>
+                        <li>Designed and developed InfoPath 2010 form and workflow for Bureau of Information Technology purchasing process with real-time tracking and reporting</li>
+                        <li>Migrated DCNR Human Resources content from static website to dynamic SharePoint based site</li>
+                        <li>Designed and developed project tracking application with status dashboards to track bureau projects</li>
+                        <li>Developed Visual WebPart for SharePoint with Visual Studio 2010 interfacing with Business Data Connectivity Service Application</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Lead Web Developer / Application Developer</div>
+                            <div class="company">PA State System of Higher Education (PASSHE)</div>
+                        </div>
+                        <div class="date-location">March 2011 – August 2011</div>
+                    </div>
+                    <ul>
+                        <li>Supported team of 3 web developers as ScrumMaster using SCRUM methodology</li>
+                        <li>Programmed in ASP.NET, VB.NET, C#.NET connecting to SQL Server 2008 database</li>
+                        <li>Implemented Telerik controls in web forms to speed development and improve UI over stock ASP.NET controls</li>
+                        <li>Configured and administered Microsoft Team Foundation Server 2010 for development environment</li>
+                        <li>Assisted with SQL Server 2008 R2 database administration, programming and debugging</li>
+                        <li>Produced development artifacts to facilitate team coordination and stakeholder information sharing</li>
+                        <li>Designed and developed Object Oriented application components for reuse and process standardization</li>
+                        <li>Developed survey application with dynamically generated wizard control and unique identifier login functionality</li>
+                    </ul>
+                </div>
+
+                <p style="text-align: center; margin: 30px 0; color: #666; font-style: italic;">
+                    <strong>Additional experience from 1996-2011 available upon request, including roles at High Concrete Group, Dauphin County PA, Eastern Alliance Insurance, Family Health Council, Phoenix Contact, Demetriou General Agency (CIO/CTO), Vertafore Inc., and Insight Research Corporation.</strong>
+                </p>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <h2 class="section-title">Education</h2>
+                <div class="education-box">
+                    <h3>Bachelor of Science in Management Information Systems</h3>
+                    <p><strong>Rochester Institute of Technology (RIT)</strong> | Rochester, New York</p>
+                    <p style="margin-top: 10px; font-style: italic;">Notable Achievement: Successfully managed 23 credit hours (10 classes) in one quarter while maintaining academic standing - demonstrating exceptional time management and dedication to learning.</p>
+                </div>
+            </div>
+
+            <!-- Technical Skills Summary -->
+            <div class="section">
+                <h2 class="section-title">Technical Skills Summary</h2>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Programming Languages & Frameworks</h3>
+                    <p>C#, VB.NET, VB, ASP.NET, AJAX, JavaScript, TypeScript, HTML5, CSS3, Blazor, React, Angular, PL/SQL, T-SQL, XML, XSL, Regular Expressions, .NET Framework (2.0-4.8), .NET Core, .NET 5+</p>
+                </div>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Business Intelligence & Analytics</h3>
+                    <p>Microsoft BI Stack (SQL Server 2005-2019), SQL Server Integration Services (SSIS), SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), Power BI, Microsoft Business Intelligence Development Studio, Tableau</p>
+                </div>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Databases</h3>
+                    <p>SQL Server 2000-2019, Azure SQL Database, MS Access, AS/400 DB4, Oracle, MySQL, PostgreSQL, MongoDB, Cosmos DB, ArcSDE</p>
+                </div>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Cloud Platforms & Services</h3>
+                    <p>Microsoft Azure (IaaS, PaaS, iPaaS), Azure Active Directory (B2B/B2C), Azure Functions, Azure Logic Apps, Azure App Services, Azure Storage, Azure DevOps, Azure Cognitive Services, Azure OpenAI, AWS (EC2, S3, Lambda)</p>
+                </div>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Development Tools & IDEs</h3>
+                    <p>Visual Studio 2005-2022, Visual Studio Code, SQL Server Management Studio, SQL Server Enterprise Manager, Data Junction, Rational Rose, Visio, Red Gate Software Tools, Telerik DevCraft Ultimate, JIRA, Confluence, Postman</p>
+                </div>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Source Control & DevOps</h3>
+                    <p>Git, GitHub, Azure DevOps (TFS), Visual Studio Online, Perforce, Visual SourceSafe, CVS, CI/CD pipelines, Docker, Kubernetes, Terraform</p>
+                </div>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Enterprise Applications</h3>
+                    <p>SharePoint Designer 2007-2013, Microsoft Project, Microsoft BizTalk Server, Microsoft Dynamics CRM, Salesforce.com, ConnectWise, HubSpot, Microsoft Office Suite, Visio, QuickBooks Enterprise, Microsoft Dynamics GP</p>
+                </div>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Operating Systems & Servers</h3>
+                    <p>Windows Server 2000-2022, Windows 10/11, Windows Mobile OS, Linux (Ubuntu, CentOS), SQL Server 2000-2019, IIS 6.0-10.0, Exchange Server 2003-2019</p>
+                </div>
+                <div class="education-box" style="margin-bottom: 15px;">
+                    <h3>Networking & Infrastructure</h3>
+                    <p>Cisco Catalyst Switches, Cisco UC500 (VoIP), Cisco ASA Firewall, SonicWall PRO Series, DNS Management, SSL Certificate Management, Active Directory, Azure AD, TCP/IP, VPN, WAN/LAN</p>
+                </div>
+                <div class="education-box">
+                    <h3>Methodologies</h3>
+                    <p>SCRUM, Agile, Waterfall, Rapid Application Development, Object Oriented Development, Service Oriented Architecture (SOA), Microservices Architecture, Test-Driven Development (TDD), DevOps Practices</p>
+                </div>
+            </div>
+
+            <!-- Professional Affiliations -->
+            <div class="section">
+                <h2 class="section-title">Professional Affiliations & User Groups</h2>
+                <div class="education-box">
+                    <ul style="list-style-position: inside; margin-left: 20px;">
+                        <li>New York City .NET Developers</li>
+                        <li>New York City SharePoint User Group</li>
+                        <li>New York City Business Intelligence User Group</li>
+                        <li>New York City Small Business User Group</li>
+          
