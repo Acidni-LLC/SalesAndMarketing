@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terprint Architecture Documentation v2.5.4</title>
+    <title>Acidni Enterprise Architecture v2.0 | December 2025</title>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y614KCC85K"></script>
@@ -17,17 +17,22 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
         :root {
-            --bg-primary: #1a1a2e;
-            --bg-secondary: #16213e;
-            --bg-tertiary: #0f3460;
-            --text-primary: #eaeaea;
-            --text-secondary: #a0a0a0;
-            --accent: #e94560;
-            --accent-secondary: #533483;
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --bg-card: #1e1e36;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0c0;
+            --text-muted: #707090;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #7c3aed;
+            --accent-tertiary: #22c55e;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
             --border: #2a2a4a;
-            --success: #4ade80;
-            --warning: #fbbf24;
-            --doc-version: "2.5.4";
+            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+            --gradient-2: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+            --gradient-3: linear-gradient(135deg, #22c55e 0%, #00d4ff 100%);
         }
         
         * {
@@ -37,170 +42,217 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.7;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px;
         }
         
+        /* Header */
         header {
             text-align: center;
-            padding: 40px 0;
-            border-bottom: 2px solid var(--border);
-            margin-bottom: 40px;
+            padding: 60px 0;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 50px;
+        }
+        
+        .logo {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent-primary);
+            margin-bottom: 20px;
         }
         
         h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            line-height: 1.2;
         }
         
         .subtitle {
+            font-size: 1.3rem;
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
         
-        /* Audience Selector Styles */
-        .audience-selector {
+        .version-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--gradient-2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        /* Navigation */
+        nav {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin: 30px 0;
+            gap: 10px;
+            flex-wrap: wrap;
             padding: 20px;
             background: var(--bg-secondary);
-            border-radius: 12px;
+            border-radius: 16px;
+            margin-bottom: 40px;
             border: 1px solid var(--border);
         }
         
-        .audience-selector label {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-        
-        .audience-selector select {
-            padding: 12px 20px;
-            font-size: 1rem;
-            border-radius: 8px;
-            border: 2px solid var(--accent);
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            cursor: pointer;
-            min-width: 250px;
-            transition: all 0.3s ease;
-        }
-        
-        .audience-selector select:hover {
-            border-color: var(--accent-secondary);
-            box-shadow: 0 0 15px rgba(233, 69, 96, 0.3);
-        }
-        
-        .audience-selector select:focus {
-            outline: none;
-            border-color: var(--accent-secondary);
-            box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
-        }
-        
-        .audience-description {
-            text-align: center;
-            padding: 15px;
-            margin-bottom: 20px;
-            background: var(--bg-tertiary);
-            border-radius: 8px;
+        nav a {
+            padding: 10px 20px;
             color: var(--text-secondary);
-            font-style: italic;
+            text-decoration: none;
+            border-radius: 8px;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
         
-        /* Section Styles */
+        nav a:hover, nav a.active {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+        }
+        
+        /* Section */
         section {
             background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
-        section.hidden {
-            display: none;
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
         }
         
         section h2 {
-            color: var(--accent);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        section h2 .icon {
+            font-size: 1.5rem;
         }
         
         section h3 {
-            color: var(--text-primary);
-            margin: 20px 0 15px 0;
+            font-size: 1.4rem;
+            color: var(--accent-primary);
+            margin: 30px 0 20px 0;
         }
         
-        /* Audience Badge */
-        .audience-badge {
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+        }
+        
+        .card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .card .badge {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 12px;
             font-size: 0.75rem;
             font-weight: 600;
-            margin-left: 10px;
-            text-transform: uppercase;
+            margin-top: 15px;
         }
         
-        .badge-all { background: var(--accent); color: white; }
-        .badge-developer { background: #3b82f6; color: white; }
-        .badge-devops { background: #8b5cf6; color: white; }
-        .badge-data_analyst { background: #10b981; color: white; }
-        .badge-business_stakeholder { background: #f59e0b; color: black; }
-        .badge-security_auditor { background: #ef4444; color: white; }
-        .badge-user { background: #06b6d4; color: black; }
-        .badge-customer { background: #ec4899; color: white; }
+        .badge-active { background: #22c55e30; color: #22c55e; }
+        .badge-new { background: #00d4ff30; color: #00d4ff; }
+        .badge-planning { background: #f59e0b30; color: #f59e0b; }
+        .badge-enterprise { background: #7c3aed30; color: #7c3aed; }
         
-        /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }
         
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        th {
+        .stat-card {
             background: var(--bg-tertiary);
-            color: var(--accent);
-            font-weight: 600;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--border);
         }
         
-        tr:hover {
-            background: rgba(233, 69, 96, 0.1);
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-card .label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
         }
         
         /* Diagram Container */
         .diagram-container {
             background: var(--bg-tertiary);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
             overflow-x: auto;
+            border: 1px solid var(--border);
         }
         
         .mermaid {
@@ -208,799 +260,1137 @@
             justify-content: center;
         }
         
-        /* Pipeline Stages */
-        .pipeline-stage {
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
             background: var(--bg-tertiary);
-            border-left: 4px solid var(--accent);
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
+            color: var(--accent-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        .pipeline-stage h4 {
-            color: var(--accent);
-            margin-bottom: 10px;
+        tr:hover {
+            background: rgba(0, 212, 255, 0.05);
         }
         
-        .pipeline-stage ul {
-            margin-left: 20px;
-        }
-        
-        .pipeline-stage li {
-            margin: 8px 0;
-            color: var(--text-secondary);
-        }
-        
-        /* Code blocks */
-        code {
+        td code {
             background: var(--bg-tertiary);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Consolas', monospace;
-            color: var(--success);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-tertiary);
         }
         
+        /* Code Blocks */
         pre {
             background: var(--bg-tertiary);
-            padding: 15px;
-            border-radius: 8px;
+            border-radius: 12px;
+            padding: 20px;
             overflow-x: auto;
+            border: 1px solid var(--border);
             margin: 15px 0;
         }
         
         pre code {
-            background: transparent;
-            padding: 0;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin: 10px 0;
+            color: var(--text-secondary);
+        }
+        
+        li strong {
+            color: var(--text-primary);
+        }
+        
+        /* Feature Highlight */
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border-left: 4px solid var(--accent-primary);
+            padding: 25px 30px;
+            border-radius: 0 16px 16px 0;
+            margin: 25px 0;
+        }
+        
+        .feature-highlight h4 {
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-1);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            border: 3px solid var(--bg-secondary);
+        }
+        
+        .timeline-item h4 {
+            color: var(--accent-primary);
+            margin-bottom: 5px;
         }
         
         /* Footer */
         footer {
             text-align: center;
-            padding: 30px;
-            border-top: 2px solid var(--border);
-            margin-top: 40px;
+            padding: 50px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
             color: var(--text-secondary);
         }
         
-        /* Links */
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        a:hover {
-            color: var(--accent-secondary);
+        footer .copyright {
+            font-size: 0.9rem;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            section {
-                padding: 20px;
-            }
-            
-            .audience-selector {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .audience-selector select {
-                min-width: 100%;
-            }
+            .container { padding: 20px; }
+            h1 { font-size: 2.2rem; }
+            section { padding: 25px; }
+            .cards-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🔬 Terprint Architecture Documentation</h1>
-            <p class="subtitle">Cannabis Product Fingerprinting System - Technical Reference</p>
-            <p class="subtitle" style="margin-top: 10px; font-size: 0.9rem;">Version 2.5.3 | December 2025</p>
+            <div class="logo">Acidni, LLC</div>
+            <h1>Enterprise Architecture</h1>
+            <p class="subtitle">Multi-Product Platform with Shared Services & CMMI Governance</p>
+            <span class="version-badge">Version 2.0 | December 2025</span>
         </header>
         
-        <!-- Audience Selector -->
-        <div class="audience-selector">
-            <label for="audienceSelect">📋 Select Your Role:</label>
-            <select id="audienceSelect" onchange="filterByAudience()">
-                <option value="all">All Audiences (Complete Documentation)</option>
-                <option value="developer">👨‍💻 Developer - Code, APIs, Local Setup</option>
-                <option value="devops">🔧 DevOps Engineer - Deployment, CI/CD, Infrastructure</option>
-                <option value="data_analyst">📊 Data Analyst - Schemas, Queries, Power BI</option>
-                <option value="business_stakeholder">💼 Business Stakeholder - Capabilities, Coverage</option>
-                <option value="security_auditor">🔒 Security Auditor - Identity, Secrets, Compliance</option>
-                <option value="user">👤 User - Website Features, How to Use</option>
-                <option value="customer">🛒 Customer - Product Info, Pricing, Benefits</option>
-            </select>
-        </div>
+        <nav>
+            <a href="#overview" class="active">Overview</a>
+            <a href="#enterprise">Enterprise</a>
+            <a href="#products">Products</a>
+            <a href="#shared-services">Shared Services</a>
+            <a href="#terprint">Terprint</a>
+            <a href="#mobilemech">MobileMech</a>
+            <a href="#tech-stack">Tech Stack</a>
+            <a href="#devops">DevOps</a>
+            <a href="#governance">Governance</a>
+        </nav>
         
-        <div id="audienceDescription" class="audience-description">
-            Viewing complete documentation for all audiences. Select a specific role above to filter content.
-        </div>
-        
-        <!-- System Overview - All Audiences -->
-        <section data-audience="all" id="overview">
-            <h2>System Overview <span class="audience-badge badge-all">All</span></h2>
-            <p>Terprint is a cannabis product fingerprinting system that extracts, processes, and analyzes Certificate of Analysis (COA) data from dispensary websites across Florida. The system provides unique product identification and data visualization through Power BI dashboards.</p>
+        <!-- Executive Overview -->
+        <section id="overview">
+            <h2><span class="icon">🏢</span> Executive Overview</h2>
             
-            <h3>Key Features</h3>
-            <ul>
-                <li><strong>Automated Data Collection:</strong> Scheduled extraction of product and COA data</li>
-                <li><strong>Multi-Dispensary Support:</strong> Unified processing for multiple dispensary formats</li>
-                <li><strong>Fingerprint Generation:</strong> Unique identification for product tracking</li>
-                <li><strong>Analytics Dashboard:</strong> Power BI integration for insights</li>
-            </ul>
+            <p style="font-size: 1.1rem; margin-bottom: 30px;">
+                Acidni is a technology company building enterprise-grade SaaS platforms with a focus on data-driven solutions. 
+                Our architecture enables rapid product development through shared services, standardized governance, and reusable infrastructure.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="number">2</div>
+                    <div class="label">Products</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">22+</div>
+                    <div class="label">Microservices</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">5</div>
+                    <div class="label">Shared Services</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">15+</div>
+                    <div class="label">Azure Services</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">99.9%</div>
+                    <div class="label">Uptime Target</div>
+                </div>
+            </div>
+            
+            <div class="feature-highlight">
+                <h4>🆕 What's New in v2.0</h4>
+                <ul>
+                    <li><strong>Enterprise Architecture:</strong> Configuration inheritance model for multi-product management</li>
+                    <li><strong>MobileMech Product:</strong> New platform for mobile service businesses</li>
+                    <li><strong>Shared Services:</strong> Extracted Communications, API Gateway, Marketplace to enterprise level</li>
+                    <li><strong>CMMI Governance:</strong> Level 3 aligned processes and KPIs</li>
+                    <li><strong>Entra ID App-to-App Auth:</strong> Service mesh authentication pattern</li>
+                </ul>
+            </div>
         </section>
         
-        <!-- Tech Stack - Developer, DevOps -->
-        <section data-audience="developer devops" id="tech-stack">
-            <h2>Technology Stack <span class="audience-badge badge-developer">Developer</span> <span class="audience-badge badge-devops">DevOps</span></h2>
+        <!-- Enterprise Architecture -->
+        <section id="enterprise">
+            <h2><span class="icon">🏗️</span> Enterprise Architecture</h2>
+            
+            <h3>Configuration Inheritance Model</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+graph TB
+    subgraph Enterprise["⚙️ Enterprise Layer (acidni-config)"]
+        EC[enterprise.yaml<br/>Required Settings]
+        ED[Enterprise Defaults]
+        SS[Shared Services Config]
+    end
+    
+    subgraph Products["📦 Product Layer"]
+        subgraph Terprint["Terprint"]
+            TC[terprint/config.yaml]
+            TCS[Terprint Components]
+        end
+        
+        subgraph MobileMech["MobileMech"]
+            MC[mobilemech/product.yaml]
+            MCS[MobileMech Components]
+        end
+        
+        subgraph Future["Future Products"]
+            FP[product-template/]
+        end
+    end
+    
+    subgraph SharedServices["🔗 Shared Services"]
+        COMM[Communications API]
+        APIM[API Gateway]
+        MKT[Marketplace]
+        ID[Identity]
+        OBS[Observability]
+    end
+    
+    EC --> TC
+    EC --> MC
+    EC --> FP
+    ED --> TC
+    ED --> MC
+    SS --> SharedServices
+    
+    TC --> TCS
+    MC --> MCS
+    
+    TCS --> COMM
+    TCS --> APIM
+    TCS --> MKT
+    MCS --> COMM
+    MCS --> APIM
+    MCS --> ID
+                </div>
+            </div>
+            
+            <h3>Enterprise Configuration Hierarchy</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>File</th>
+                        <th>Purpose</th>
+                        <th>Override?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Enterprise</td>
+                        <td><code>enterprise.yaml</code></td>
+                        <td>Required standards (security, cloud, devops)</td>
+                        <td>❌ No</td>
+                    </tr>
+                    <tr>
+                        <td>Enterprise</td>
+                        <td><code>defaults</code> section</td>
+                        <td>Default tech choices (can be overridden)</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Product</td>
+                        <td><code>product.yaml</code></td>
+                        <td>Product-specific settings</td>
+                        <td>Inherits + Extends</td>
+                    </tr>
+                    <tr>
+                        <td>Component</td>
+                        <td><code>config.json</code></td>
+                        <td>Component runtime config</td>
+                        <td>Scoped to component</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Namespace Strategy</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Pattern</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Python Package</td>
+                        <td><code>acidni.{product}.{module}</code></td>
+                        <td><code>acidni.terprint.config</code></td>
+                    </tr>
+                    <tr>
+                        <td>.NET Namespace</td>
+                        <td><code>Acidni.{Product}.{Module}</code></td>
+                        <td><code>Acidni.Terprint.Web</code></td>
+                    </tr>
+                    <tr>
+                        <td>Azure Resource</td>
+                        <td><code>{type}-{env}-{product}-{service}</code></td>
+                        <td><code>func-dev-terprint-ai-chat</code></td>
+                    </tr>
+                    <tr>
+                        <td>Resource Group</td>
+                        <td><code>rg-{env}-{product}-{purpose}</code></td>
+                        <td><code>rg-dev-terprint-shared</code></td>
+                    </tr>
+                    <tr>
+                        <td>DevOps Repository</td>
+                        <td><code>{product}-{component}</code></td>
+                        <td><code>terprint-ai-chat</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Products -->
+        <section id="products">
+            <h2><span class="icon">📦</span> Product Portfolio</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>🔬 Terprint</h4>
+                    <p>Cannabis product intelligence platform. Data aggregation, COA extraction, terpene fingerprinting, and AI-powered recommendations for Florida dispensaries.</p>
+                    <span class="badge badge-active">Active</span>
+                </div>
+                <div class="card">
+                    <h4>🔧 MobileMech</h4>
+                    <p>Mobile service business management. Website, AI booking, SMS scheduling, invoicing, and customer management for mobile mechanics and service providers.</p>
+                    <span class="badge badge-planning">Planning</span>
+                </div>
+                <div class="card">
+                    <h4>🚀 Future Products</h4>
+                    <p>New products can be created using the product-template with standardized structure, shared services access, and inherited enterprise configuration.</p>
+                    <span class="badge badge-enterprise">Enterprise Ready</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Shared Services -->
+        <section id="shared-services">
+            <h2><span class="icon">🔗</span> Shared Services</h2>
+            
+            <p style="margin-bottom: 25px;">Enterprise-level services consumed by all products. Each service is product-agnostic and supports multi-tenancy.</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>📧 Communications</h4>
+                    <p>Unified email and SMS messaging via Azure Communication Services. Supports templates, tracking, and delivery reports.</p>
+                    <span class="badge badge-active">Active</span>
+                </div>
+                <div class="card">
+                    <h4>🌐 API Gateway</h4>
+                    <p>Azure API Management for centralized API routing, throttling, authentication, and analytics across all products.</p>
+                    <span class="badge badge-active">Active</span>
+                </div>
+                <div class="card">
+                    <h4>🏪 Marketplace</h4>
+                    <p>Azure Marketplace integration for SaaS licensing, subscription management, metering, and billing.</p>
+                    <span class="badge badge-active">Active</span>
+                </div>
+                <div class="card">
+                    <h4>🔐 Identity</h4>
+                    <p>Azure Entra ID for user authentication, B2B federation, and role-based access control (RBAC).</p>
+                    <span class="badge badge-active">Active</span>
+                </div>
+                <div class="card">
+                    <h4>📊 Observability</h4>
+                    <p>Application Insights, Log Analytics, and custom health dashboard for monitoring, alerting, and KPI tracking.</p>
+                    <span class="badge badge-active">Active</span>
+                </div>
+            </div>
+            
+            <h3>Shared Services Architecture</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+graph TB
+    subgraph Products["Products"]
+        TP[Terprint]
+        MM[MobileMech]
+        FP[Future Products]
+    end
+    
+    subgraph SharedServices["🔗 Enterprise Shared Services"]
+        subgraph Comm["📧 Communications"]
+            CAPI[API Endpoints]
+            ACS[Azure Comm Services]
+        end
+        
+        subgraph Gateway["🌐 API Gateway"]
+            APIM[Azure APIM]
+            Policies[Rate Limiting<br/>Auth<br/>Routing]
+        end
+        
+        subgraph Market["🏪 Marketplace"]
+            SUB[Subscriptions]
+            METER[Metering]
+            WEBHOOK[Webhooks]
+        end
+        
+        subgraph Identity["🔐 Identity"]
+            ENTRA[Entra ID]
+            B2B[B2B Federation]
+            RBAC[RBAC Roles]
+        end
+        
+        subgraph Observe["📊 Observability"]
+            AI[App Insights]
+            LA[Log Analytics]
+            DASH[Health Dashboard]
+        end
+    end
+    
+    TP --> Gateway
+    MM --> Gateway
+    FP --> Gateway
+    
+    Gateway --> Comm
+    Gateway --> Market
+    Gateway --> Observe
+    
+    TP -.-> Identity
+    MM -.-> Identity
+    FP -.-> Identity
+                </div>
+            </div>
+        </section>
+        
+        <!-- Terprint Deep Dive -->
+        <section id="terprint">
+            <h2><span class="icon">🔬</span> Terprint Platform</h2>
+            
+            <p style="margin-bottom: 25px;">
+                Cannabis product intelligence platform providing data aggregation, COA extraction, and AI-powered analytics 
+                for Florida medical marijuana dispensaries.
+            </p>
+            
+            <h3>System Components</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+graph TB
+    subgraph DataSources["🏪 Data Sources"]
+        D1[Trulieve]
+        D2[Curaleaf]
+        D3[MÜV]
+        D4[Flowery]
+        D5[Cookies]
+        D6[Sunnyside]
+    end
+    
+    subgraph DataPipeline["⚙️ Data Pipeline"]
+        MD[Menu Downloader<br/>Timer Trigger]
+        BP[Batch Processor<br/>COA Extraction]
+        CE[COA Extractor<br/>PDF Parsing]
+    end
+    
+    subgraph Storage["💾 Storage"]
+        BLOB[Blob Storage<br/>Raw JSON]
+        KQL[Event House<br/>Kusto/KQL]
+        SQL[Azure SQL<br/>Marketplace]
+    end
+    
+    subgraph AIServices["🤖 AI Services"]
+        CHAT[AI Chat<br/>RAG System]
+        REC[AI Recommender]
+        DEALS[AI Deals]
+        LAB[AI Lab Analyst]
+        HEALTH[Health Monitor]
+    end
+    
+    subgraph Presentation["📊 Presentation"]
+        WEB[Blazor Website]
+        PBI[Power BI Reports]
+        VIS[Custom Visuals]
+    end
+    
+    subgraph Support["🔌 Support Services"]
+        COMM[Communications]
+        METER[Metering]
+        LOG[Logger]
+    end
+    
+    DataSources --> MD
+    MD --> BLOB
+    MD --> BP
+    BP --> CE
+    CE --> KQL
+    
+    KQL --> CHAT
+    KQL --> REC
+    KQL --> DEALS
+    KQL --> WEB
+    KQL --> PBI
+    
+    CHAT --> WEB
+    REC --> WEB
+    
+    WEB --> COMM
+    WEB --> METER
+    
+    HEALTH --> AIServices
+    LOG --> AIServices
+                </div>
+            </div>
+            
+            <h3>Component Registry</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Component</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Core</td>
+                        <td><code>terprint-config</code></td>
+                        <td>Python Package</td>
+                        <td>✅ v4.0.1</td>
+                    </tr>
+                    <tr>
+                        <td>Core</td>
+                        <td><code>Terprint.Web</code></td>
+                        <td>Blazor Server</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>Data</td>
+                        <td><code>terprint-menudownloader</code></td>
+                        <td>Azure Function</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>Data</td>
+                        <td><code>terprint-batch-processor</code></td>
+                        <td>Azure Function</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>AI</td>
+                        <td><code>terprint-ai-chat</code></td>
+                        <td>Azure Function</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>AI</td>
+                        <td><code>terprint-ai-recommender</code></td>
+                        <td>Azure Function</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>AI</td>
+                        <td><code>terprint-ai-deals</code></td>
+                        <td>Azure Function</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>AI</td>
+                        <td><code>terprint-ai-health</code></td>
+                        <td>Azure Function + Dashboard</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics</td>
+                        <td><code>terprint-powerbi-visuals</code></td>
+                        <td>Power BI Custom Visuals</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>Support</td>
+                        <td><code>func-terprint-communications</code></td>
+                        <td>Azure Function</td>
+                        <td>✅ Active</td>
+                    </tr>
+                    <tr>
+                        <td>Marketplace</td>
+                        <td><code>terprint-marketplace-webhook</code></td>
+                        <td>Azure Function (.NET)</td>
+                        <td>✅ Active</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Data Pipeline Flow</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+sequenceDiagram
+    participant Timer as ⏰ Timer (6 AM)
+    participant MD as Menu Downloader
+    participant Blob as 💾 Blob Storage
+    participant BP as Batch Processor
+    participant KQL as 📊 Event House
+    participant Web as 🌐 Website
+    participant AI as 🤖 AI Services
+    
+    Timer->>MD: Trigger daily download
+    MD->>MD: Fetch from dispensary APIs
+    MD->>Blob: Store raw JSON
+    MD->>BP: HTTP trigger
+    BP->>Blob: Read raw data
+    BP->>BP: Extract COA data
+    BP->>BP: Normalize & fingerprint
+    BP->>KQL: Ingest processed data
+    KQL-->>Web: Query for display
+    KQL-->>AI: Query for recommendations
+    Web->>AI: User queries
+    AI-->>Web: AI responses
+                </div>
+            </div>
+        </section>
+        
+        <!-- MobileMech -->
+        <section id="mobilemech">
+            <h2><span class="icon">🔧</span> MobileMech Platform</h2>
+            
+            <p style="margin-bottom: 25px;">
+                Comprehensive business management platform for mobile mechanics, auto detailers, and field service providers.
+                End-to-end solution for scheduling, customer management, and business operations.
+            </p>
+            
+            <h3>Target Market</h3>
+            <ul>
+                <li><strong>Mobile Mechanics:</strong> On-site auto repair and maintenance</li>
+                <li><strong>Auto Detailers:</strong> Mobile car wash and detailing services</li>
+                <li><strong>Field Service:</strong> Pet groomers, notary services, mobile health</li>
+            </ul>
+            
+            <h3>Core Features</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>🌐 Website Builder</h4>
+                    <p>Professional landing pages with service listings, pricing, coverage areas, and online booking integration.</p>
+                </div>
+                <div class="card">
+                    <h4>🤖 AI Booking</h4>
+                    <p>Intelligent scheduling that considers travel time, service duration, and technician availability.</p>
+                </div>
+                <div class="card">
+                    <h4>📱 SMS System</h4>
+                    <p>Two-way text messaging for booking confirmations, reminders, and customer communication.</p>
+                </div>
+                <div class="card">
+                    <h4>📅 Scheduling</h4>
+                    <p>Visual calendar with route optimization, availability management, and recurring appointments.</p>
+                </div>
+                <div class="card">
+                    <h4>💰 Invoicing</h4>
+                    <p>Professional invoices, payment processing, and basic accounting/expense tracking.</p>
+                </div>
+                <div class="card">
+                    <h4>👥 CRM</h4>
+                    <p>Customer database, vehicle history, service records, and communication logs.</p>
+                </div>
+            </div>
+            
+            <h3>Planned Architecture</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+graph TB
+    subgraph Customers["👤 Customers"]
+        CW[Customer Website]
+        SMS[SMS/Text]
+        APP[Mobile App]
+    end
+    
+    subgraph Core["🔧 MobileMech Core"]
+        WEB[Web Portal]
+        API[Core API]
+        BOOK[Booking Engine]
+        SCHED[Scheduler]
+        INV[Invoicing]
+        CRM[CRM Module]
+    end
+    
+    subgraph AI["🤖 AI Services"]
+        AIBOOK[AI Booking Assistant]
+        AIROUTE[Route Optimizer]
+    end
+    
+    subgraph Shared["🔗 Shared Services"]
+        COMM[Communications]
+        PAY[Payment Processing]
+        MAPS[Azure Maps]
+    end
+    
+    subgraph Data["💾 Data"]
+        SQL[Azure SQL]
+        REDIS[Redis Cache]
+    end
+    
+    Customers --> WEB
+    Customers --> SMS
+    SMS --> COMM
+    
+    WEB --> API
+    API --> BOOK
+    API --> SCHED
+    API --> INV
+    API --> CRM
+    
+    BOOK --> AIBOOK
+    SCHED --> AIROUTE
+    
+    API --> SQL
+    API --> REDIS
+    INV --> PAY
+    SCHED --> MAPS
+                </div>
+            </div>
+            
+            <h3>SaaS Pricing Tiers</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Target</th>
+                        <th>Features</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Starter</strong></td>
+                        <td>Solo operators</td>
+                        <td>Basic booking, invoicing, 100 SMS/mo</td>
+                        <td>$29/mo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Professional</strong></td>
+                        <td>Growing businesses</td>
+                        <td>Full scheduling, CRM, 500 SMS/mo, website</td>
+                        <td>$79/mo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Business</strong></td>
+                        <td>Multi-technician teams</td>
+                        <td>Team management, route optimization, 2000 SMS/mo</td>
+                        <td>$149/mo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Enterprise</strong></td>
+                        <td>Franchises</td>
+                        <td>White-label, API access, unlimited SMS</td>
+                        <td>Custom</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Technology Stack -->
+        <section id="tech-stack">
+            <h2><span class="icon">⚡</span> Technology Stack</h2>
+            
+            <h3>Required Technologies (Enterprise Standard)</h3>
             <table>
                 <thead>
                     <tr>
                         <th>Category</th>
                         <th>Technology</th>
+                        <th>Version</th>
                         <th>Purpose</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Runtime</td>
-                        <td>Python 3.12</td>
-                        <td>Core application development</td>
+                        <td>Cloud</td>
+                        <td>Microsoft Azure</td>
+                        <td>-</td>
+                        <td>Primary cloud platform</td>
                     </tr>
                     <tr>
-                        <td>Functions</td>
-                        <td>Azure Functions v4</td>
-                        <td>Serverless compute for data pipelines</td>
+                        <td>Language</td>
+                        <td>Python</td>
+                        <td>3.12</td>
+                        <td>Azure Functions, data processing, AI</td>
                     </tr>
                     <tr>
-                        <td>Storage</td>
-                        <td>Azure Blob Storage</td>
-                        <td>Raw data and processed results</td>
+                        <td>Language</td>
+                        <td>.NET</td>
+                        <td>8.0</td>
+                        <td>Web apps, enterprise services</td>
+                    </tr>
+                    <tr>
+                        <td>Infrastructure</td>
+                        <td>Bicep</td>
+                        <td>latest</td>
+                        <td>Infrastructure as Code</td>
+                    </tr>
+                    <tr>
+                        <td>Scripting</td>
+                        <td>PowerShell</td>
+                        <td>7.x</td>
+                        <td>Automation scripts</td>
+                    </tr>
+                    <tr>
+                        <td>DevOps</td>
+                        <td>Azure DevOps</td>
+                        <td>-</td>
+                        <td>CI/CD, repos, boards</td>
+                    </tr>
+                    <tr>
+                        <td>Auth</td>
+                        <td>Azure Entra ID</td>
+                        <td>-</td>
+                        <td>Identity & access management</td>
                     </tr>
                     <tr>
                         <td>Secrets</td>
                         <td>Azure Key Vault</td>
-                        <td>Secure credential management</td>
+                        <td>-</td>
+                        <td>Secrets management</td>
                     </tr>
                     <tr>
                         <td>Monitoring</td>
                         <td>Application Insights</td>
-                        <td>Telemetry and diagnostics</td>
-                    </tr>
-                    <tr>
-                        <td>CI/CD</td>
-                        <td>Azure DevOps</td>
-                        <td>Build and release pipelines</td>
-                    </tr>
-                    <tr>
-                        <td>Web</td>
-                        <td>Blazor Server (.NET 8)</td>
-                        <td>Terprint Website application</td>
-                    </tr>
-                    <tr>
-                        <td>Analytics</td>
-                        <td>Power BI</td>
-                        <td>Data visualization and reporting</td>
+                        <td>-</td>
+                        <td>Telemetry & diagnostics</td>
                     </tr>
                 </tbody>
             </table>
-        </section>
-        
-        <!-- Audiences Reference - All -->
-        <section data-audience="all" id="audiences">
-            <h2>Documentation Audiences <span class="audience-badge badge-all">All</span></h2>
-            <p>This documentation is designed for multiple audiences. Use the dropdown above to filter content for your role:</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Audience</th>
-                        <th>Focus Areas</th>
-                        <th>Technical Level</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>👨‍💻 Developer</td>
-                        <td>Code structure, APIs, local development setup</td>
-                        <td>High</td>
-                    </tr>
-                    <tr>
-                        <td>🔧 DevOps Engineer</td>
-                        <td>Deployment, CI/CD, infrastructure configuration</td>
-                        <td>High</td>
-                    </tr>
-                    <tr>
-                        <td>📊 Data Analyst</td>
-                        <td>Data schemas, query patterns, Power BI</td>
-                        <td>Medium</td>
-                    </tr>
-                    <tr>
-                        <td>💼 Business Stakeholder</td>
-                        <td>System capabilities, coverage, costs</td>
-                        <td>Low</td>
-                    </tr>
-                    <tr>
-                        <td>🔒 Security Auditor</td>
-                        <td>Identity management, secrets, compliance</td>
-                        <td>High</td>
-                    </tr>
-                    <tr>
-                        <td>👤 User</td>
-                        <td>Website features, how to use the system</td>
-                        <td>None</td>
-                    </tr>
-                    <tr>
-                        <td>🛒 Customer</td>
-                        <td>Product information, pricing, benefits</td>
-                        <td>None</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        
-        <!-- Pipeline Stages - DevOps, Developer -->
-        <section data-audience="developer devops" id="pipeline">
-            <h2>Data Pipeline Stages <span class="audience-badge badge-developer">Developer</span> <span class="audience-badge badge-devops">DevOps</span></h2>
             
-            <div class="pipeline-stage">
-                <h4>Stage 1: Menu Download</h4>
-                <ul>
-                    <li>Triggers on schedule via Azure Functions timer</li>
-                    <li>Downloads menu data from dispensary APIs/websites</li>
-                    <li>Stores raw JSON in Azure Blob Storage</li>
-                    <li>Handles rate limiting and retry logic</li>
-                </ul>
+            <h3>Azure Services Used</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>⚡ Compute</h4>
+                    <ul>
+                        <li>Azure Functions (serverless)</li>
+                        <li>App Service (web apps)</li>
+                        <li>Static Web Apps</li>
+                        <li>Container Apps</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>💾 Data</h4>
+                    <ul>
+                        <li>Blob Storage</li>
+                        <li>Azure SQL</li>
+                        <li>Event House (Kusto)</li>
+                        <li>Redis Cache</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🤖 AI</h4>
+                    <ul>
+                        <li>Azure OpenAI (GPT-4)</li>
+                        <li>Azure AI Search</li>
+                        <li>Cognitive Services</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🔐 Security</h4>
+                    <ul>
+                        <li>Entra ID</li>
+                        <li>Key Vault</li>
+                        <li>Managed Identities</li>
+                        <li>Private Endpoints</li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="pipeline-stage">
-                <h4>Stage 2: COA Extraction</h4>
-                <ul>
-                    <li>Processes raw menu data to identify COA links</li>
-                    <li>Downloads and parses PDF/HTML COA documents</li>
-                    <li>Extracts cannabinoid and terpene profiles</li>
-                    <li>Normalizes data across dispensary formats</li>
-                </ul>
-            </div>
-            
-            <div class="pipeline-stage">
-                <h4>Stage 3: Data Processing</h4>
-                <ul>
-                    <li>Validates extracted data quality</li>
-                    <li>Generates unique product fingerprints</li>
-                    <li>Calculates derived metrics and scores</li>
-                    <li>Prepares data for analytics consumption</li>
-                </ul>
-            </div>
-            
-            <div class="pipeline-stage">
-                <h4>Stage 4: Storage & Integration</h4>
-                <ul>
-                    <li>Stores processed data in structured format</li>
-                    <li>Updates Power BI datasets</li>
-                    <li>Triggers downstream notifications</li>
-                    <li>Archives historical data for trending</li>
-                </ul>
-            </div>
-            
-            <div class="pipeline-stage">
-                <h4>Stage 5: Visualization</h4>
-                <ul>
-                    <li>Power BI dashboards refresh automatically</li>
-                    <li>Web application displays current data</li>
-                    <li>Alerts generated for anomalies</li>
-                    <li>Reports distributed to stakeholders</li>
-                </ul>
-            </div>
-        </section>
-        
-        <!-- Security Section - Security Auditor, DevOps -->
-        <section data-audience="security_auditor devops" id="security">
-            <h2>Security Architecture <span class="audience-badge badge-security_auditor">Security</span> <span class="audience-badge badge-devops">DevOps</span></h2>
-            
-            <h3>Identity & Access Management</h3>
-            <ul>
-                <li><strong>Managed Identity:</strong> System-assigned managed identities for Azure Functions</li>
-                <li><strong>RBAC:</strong> Role-based access control for all Azure resources</li>
-                <li><strong>Service Principals:</strong> DevOps service connections with minimal permissions</li>
-            </ul>
-            
-            <h3>Secrets Management</h3>
-            <ul>
-                <li><strong>Key Vault:</strong> All secrets stored in Azure Key Vault</li>
-                <li><strong>Reference Pattern:</strong> Functions use Key Vault references, not direct secrets</li>
-                <li><strong>Rotation:</strong> Automated secret rotation policies</li>
-            </ul>
-            
-            <h3>Network Security</h3>
-            <ul>
-                <li><strong>HTTPS Only:</strong> All endpoints require TLS 1.2+</li>
-                <li><strong>Private Endpoints:</strong> Storage and Key Vault accessible via private endpoints</li>
-                <li><strong>IP Restrictions:</strong> Function apps have IP-based access rules</li>
-            </ul>
-        </section>
-        
-        <!-- Data Schemas - Data Analyst, Developer -->
-        <section data-audience="data_analyst developer" id="data-schemas">
-            <h2>Data Schemas <span class="audience-badge badge-data_analyst">Data Analyst</span> <span class="audience-badge badge-developer">Developer</span></h2>
-            
-            <h3>Product Data Structure</h3>
-            <pre><code>{
-    "product_id": "string (unique identifier)",
-    "dispensary": "string (source dispensary)",
-    "name": "string (product name)",
-    "category": "string (flower, concentrate, etc.)",
-    "strain_type": "string (indica, sativa, hybrid)",
-    "thc_percentage": "float",
-    "cbd_percentage": "float",
-    "terpene_profile": {
-        "myrcene": "float",
-        "limonene": "float",
-        "caryophyllene": "float"
-    },
-    "fingerprint": "string (generated hash)",
-    "extracted_at": "datetime",
-    "coa_url": "string (source document)"
-}</code></pre>
-            
-            <h3>Supported Dispensaries</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Dispensary</th>
-                        <th>Format</th>
-                        <th>Update Frequency</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Trulieve</td><td>JSON API</td><td>Daily</td></tr>
-                    <tr><td>Curaleaf</td><td>HTML Scrape</td><td>Daily</td></tr>
-                    <tr><td>MÜV</td><td>JSON API</td><td>Daily</td></tr>
-                    <tr><td>Sunnyside</td><td>JSON API</td><td>Daily</td></tr>
-                    <tr><td>Fluent</td><td>HTML Scrape</td><td>Daily</td></tr>
-                    <tr><td>The Flowery</td><td>JSON API</td><td>Daily</td></tr>
-                    <tr><td>Cookies</td><td>JSON API</td><td>Daily</td></tr>
-                </tbody>
-            </table>
-        </section>
-        
-        <!-- User Guide - User -->
-        <section data-audience="user" id="user-guide">
-            <h2>User Guide <span class="audience-badge badge-user">User</span></h2>
-            
-            <h3>Getting Started</h3>
-            <p>Welcome to Terprint! This system helps you find and compare cannabis products across Florida dispensaries based on their chemical profiles.</p>
-            
-            <h3>How to Use the Website</h3>
-            <ul>
-                <li><strong>Search Products:</strong> Use the search bar to find products by name or strain</li>
-                <li><strong>Filter by Dispensary:</strong> Select one or more dispensaries to narrow results</li>
-                <li><strong>Compare Profiles:</strong> View side-by-side terpene and cannabinoid profiles</li>
-                <li><strong>View COA Details:</strong> Click any product to see its full Certificate of Analysis</li>
-                <li><strong>Save Favorites:</strong> Bookmark products for quick access later</li>
-            </ul>
-            
-            <h3>Understanding Fingerprints</h3>
-            <p>Each product has a unique "fingerprint" based on its chemical composition. Products with similar fingerprints will have similar effects, even if they have different names at different dispensaries.</p>
-            
-            <h3>Tips for Best Results</h3>
-            <ul>
-                <li>Check data freshness - products are updated daily</li>
-                <li>Use filters to narrow down large result sets</li>
-                <li>Compare multiple products before making decisions</li>
-            </ul>
-        </section>
-        
-        <!-- Customer Info - Customer -->
-        <section data-audience="customer" id="customer-info">
-            <h2>Product Information <span class="audience-badge badge-customer">Customer</span></h2>
-            
-            <h3>What is Terprint?</h3>
-            <p>Terprint is a cannabis product intelligence platform that helps you make informed purchasing decisions by providing detailed chemical analysis comparisons across multiple dispensaries.</p>
-            
-            <h3>Key Benefits</h3>
-            <ul>
-                <li><strong>Find Similar Products:</strong> Discover products with matching profiles at different price points</li>
-                <li><strong>Quality Assurance:</strong> View actual lab test results, not just marketing claims</li>
-                <li><strong>Price Comparison:</strong> Compare similar products across dispensaries</li>
-                <li><strong>Personalized Recommendations:</strong> Find products that match your preferences</li>
-            </ul>
-            
-            <h3>Coverage</h3>
-            <p>We currently track products from major Florida dispensaries including Trulieve, Curaleaf, MÜV, Sunnyside, Fluent, The Flowery, and Cookies. Our database is updated daily with the latest product information.</p>
-            
-            <h3>Pricing Plans</h3>
-            <p>Contact us for information about subscription plans and enterprise pricing. We offer individual, professional, and business tiers to meet your needs.</p>
-        </section>
-        
-        <!-- Business Overview - Business Stakeholder -->
-        <section data-audience="business_stakeholder customer" id="business-overview">
-            <h2>Business Overview <span class="audience-badge badge-business_stakeholder">Business</span> <span class="audience-badge badge-customer">Customer</span></h2>
-            
-            <h3>Market Coverage</h3>
-            <ul>
-                <li><strong>7 Major Dispensaries:</strong> Comprehensive coverage of Florida's medical cannabis market</li>
-                <li><strong>Daily Updates:</strong> Fresh data ensures accurate comparisons</li>
-                <li><strong>Historical Tracking:</strong> Trend analysis over time</li>
-            </ul>
-            
-            <h3>Value Proposition</h3>
-            <ul>
-                <li>Unique product fingerprinting technology</li>
-                <li>Cross-dispensary product matching</li>
-                <li>Automated data collection and processing</li>
-                <li>Self-service analytics via Power BI</li>
-            </ul>
-            
-            <h3>System Reliability</h3>
-            <ul>
-                <li><strong>Uptime:</strong> 99.9% availability target</li>
-                <li><strong>Data Freshness:</strong> Updated within 24 hours</li>
-                <li><strong>Scalability:</strong> Cloud-native architecture</li>
-            </ul>
-        </section>
-        
-        <!-- Architecture Diagram - Developer, DevOps -->
-        <section data-audience="developer devops" id="architecture-diagram">
-            <h2>System Architecture <span class="audience-badge badge-developer">Developer</span> <span class="audience-badge badge-devops">DevOps</span></h2>
-            
+            <h3>App-to-App Authentication</h3>
             <div class="diagram-container">
                 <div class="mermaid">
 sequenceDiagram
-    participant Timer as Azure Timer
-    participant Func as Azure Functions
-    participant Storage as Blob Storage
-    participant KV as Key Vault
-    participant AI as App Insights
-    participant PBI as Power BI
+    participant App1 as Calling Service
+    participant MI as Managed Identity
+    participant Entra as Entra ID
+    participant App2 as Target Service
     
-    Timer->>Func: Trigger (Schedule)
-    Func->>KV: Get Secrets
-    KV-->>Func: API Keys
-    Func->>Storage: Download Previous Data
-    Func->>Func: Extract New Data
-    Func->>Storage: Store Raw JSON
-    Func->>Func: Process & Fingerprint
-    Func->>Storage: Store Processed Data
-    Func->>AI: Log Telemetry
-    Storage-->>PBI: Refresh Dataset
+    App1->>MI: Request token for App2
+    MI->>Entra: Client credentials flow
+    Entra-->>MI: JWT token (audience: App2)
+    MI-->>App1: Bearer token
+    App1->>App2: API call + Bearer token
+    App2->>App2: Validate token<br/>(audience, issuer, scopes)
+    App2-->>App1: Response
                 </div>
             </div>
         </section>
         
-        <!-- High Level Architecture - All -->
-        <section data-audience="all" id="high-level-architecture">
-            <h2>High-Level Architecture <span class="audience-badge badge-all">All</span></h2>
+        <!-- DevOps -->
+        <section id="devops">
+            <h2><span class="icon">🔧</span> DevOps & CI/CD</h2>
             
+            <h3>Repository Structure</h3>
             <div class="diagram-container">
                 <div class="mermaid">
 graph TB
-    subgraph Sources["Data Sources"]
-        D1[Trulieve]
-        D2[Curaleaf]
-        D3[MÜV]
-        D4[Other Dispensaries]
+    subgraph Config["🎯 Configuration Hub"]
+        TC[terprint-config<br/>Enterprise Config Package]
     end
     
-    subgraph Azure["Azure Cloud"]
-        AF[Azure Functions]
-        BS[Blob Storage]
-        KV[Key Vault]
-        AI[App Insights]
+    subgraph Pipeline["⚙️ CI/CD Orchestration"]
+        TP[terprint-pipeline<br/>Build & Deploy Templates]
     end
     
-    subgraph Output["Outputs"]
-        PBI[Power BI]
-        WEB[Website]
+    subgraph Core["📦 Core (6 repos)"]
+        C1[terprint-config]
+        C2[Terprint.Web]
+        C3[Terprint.Tests]
+        C4[terprint-logger]
     end
     
-    D1 --> AF
-    D2 --> AF
-    D3 --> AF
-    D4 --> AF
-    AF <--> BS
-    AF <--> KV
-    AF --> AI
-    BS --> PBI
-    BS --> WEB
-                </div>
-            </div>
-        </section>
-        
-        <!-- Dispensary Data Flow - Data Analyst -->
-        <section data-audience="data_analyst developer" id="dispensary-flow">
-            <h2>Dispensary Data Flow <span class="audience-badge badge-data_analyst">Data Analyst</span> <span class="audience-badge badge-developer">Developer</span></h2>
-            
-            <div class="diagram-container">
-                <div class="mermaid">
-flowchart LR
-    subgraph Input["Raw Input"]
-        API[API Response]
-        HTML[HTML Page]
-        PDF[PDF COA]
+    subgraph AI["🤖 AI Services (5 repos)"]
+        A1[terprint-ai-chat]
+        A2[terprint-ai-recommender]
+        A3[terprint-ai-deals]
+        A4[terprint-ai-lab]
+        A5[terprint-ai-health]
     end
     
-    subgraph Processing["Processing"]
-        Parse[Parser]
-        Extract[Extractor]
-        Normalize[Normalizer]
-        Fingerprint[Fingerprinter]
+    subgraph Data["📊 Data Processing (3 repos)"]
+        D1[terprint-menudownloader]
+        D2[terprint-batch-processor]
+        D3[terprint-coa-extractor]
     end
     
-    subgraph Output["Output"]
-        JSON[Structured JSON]
-        Analytics[Analytics Ready]
+    subgraph Support["🔌 Support (3 repos)"]
+        S1[func-terprint-communications]
+        S2[terprint-metering]
+        S3[terprint-marketplace-webhook]
     end
     
-    API --> Parse
-    HTML --> Parse
-    PDF --> Extract
-    Parse --> Normalize
-    Extract --> Normalize
-    Normalize --> Fingerprint
-    Fingerprint --> JSON
-    JSON --> Analytics
-                </div>
-            </div>
-        </section>
-        
-        <!-- Menu Explorer Workflow - DevOps Developer -->
-        <section data-audience="devops developer" id="menu-explorer-workflow">
-            <h2>Menu Explorer Workflow <span class="audience-badge badge-devops">DevOps</span> <span class="audience-badge badge-developer">Developer</span></h2>
-            
-            <div class="diagram-container">
-                <div class="mermaid">
-sequenceDiagram
-    participant Config as terprint-config
-    participant Explorer as Menu Explorer MI
-    participant DevOps as Azure DevOps
-    participant MenuDL as Menu Downloader
-    participant BatchProc as Batch Processor
-    
-    Note over Config,Explorer: Discovery Phase (mi-menu-explorer)
-    Explorer->>Config: Read discovery_targets
-    Explorer->>DevOps: Query existing Epics
-    Explorer->>DevOps: Create missing work items
-    Explorer->>Explorer: Discover API endpoints
-    Explorer->>Explorer: Enumerate store IDs
-    Explorer->>Explorer: Map fields to schema
-    Explorer->>Explorer: Validate data quality
-    Explorer->>DevOps: Update work item status
-    
-    Note over Explorer,BatchProc: Production Handoff
-    Explorer->>DevOps: Create Menu Downloader Story
-    Note right of DevOps: Assigned to: terprint-menu-downloader
-    Explorer->>DevOps: Create Batch Processor Story
-    Note right of DevOps: Assigned to: func-terprint-batchprocessor
-    Explorer->>Config: Move to production_dispensaries
-    
-    Note over MenuDL,BatchProc: Production Phase
-    MenuDL->>MenuDL: Configure scheduled downloads
-    BatchProc->>BatchProc: Configure batch processing
-    MenuDL->>DevOps: Close Menu Downloader Story
-    BatchProc->>DevOps: Close Batch Processor Story
-    Explorer->>DevOps: Close Epic
-                </div>
-            </div>
-        </section>
-        
-        <!-- Stock API Workflow - Developer, User -->
-        <section data-audience="developer user" id="stock-api-workflow">
-            <h2>Stock Check API Workflow <span class="audience-badge badge-developer">Developer</span> <span class="audience-badge badge-user">User</span></h2>
-            
-            <h3>Real-Time Stock Check</h3>
-            <div class="diagram-container">
-                <div class="mermaid">
-sequenceDiagram
-    participant User as User Browser
-    participant Web as Terprint Website
-    participant Stock as Stock API<br/>(Menu Downloader)
-    participant Redis as Redis Cache
-    participant Dispo as Dispensary APIs<br/>(MÜV, Trulieve, etc.)
-    
-    Note over User,Dispo: Product Page Stock Check
-    User->>Web: View Product Page
-    Web->>Stock: GET /api/stock/{dispensary}/{batch_id}<br/>Headers: x-functions-key
-    Stock->>Redis: Check cache
-    
-    alt Cache Hit
-        Redis-->>Stock: Return cached stock data
-    else Cache Miss
-        Stock->>Dispo: Query inventory API
-        Dispo-->>Stock: Store availability + quantities
-        Stock->>Redis: Cache result (TTL: 60s)
-    end
-    
-    Stock-->>Web: Stock response with store locations
-    Web-->>User: Display stock status + nearest stores
+    TC --> Core
+    TC --> AI
+    TC --> Data
+    TC --> Support
+    TP --> Core
+    TP --> AI
+    TP --> Data
+    TP --> Support
                 </div>
             </div>
             
-            <h3>Cross-Dispensary Strain Search</h3>
-            <div class="diagram-container">
-                <div class="mermaid">
-sequenceDiagram
-    participant User as User Browser
-    participant Web as Terprint Website
-    participant Stock as Stock API<br/>(Menu Downloader)
-    participant Index as Strain Index<br/>(Redis)
-    participant MUV as MÜV API
-    participant TRU as Trulieve API
-    participant COO as Cookies API
-    participant FLO as Flowery API
-    
-    Note over User,FLO: "Find Gelato near me" Search
-    User->>Web: Search: "Gelato"<br/>Location: Orlando, FL<br/>Radius: 25 miles
-    Web->>Stock: GET /api/stock/search<br/>?strain=Gelato&lat=28.54&lng=-81.38&max_distance=25
-    
-    Stock->>Index: Find matching strains
-    Index-->>Stock: Matching batch IDs by dispensary
-    
-    par Parallel Stock Checks
-        Stock->>MUV: Check stock for Gelato batches
-        Stock->>TRU: Check stock for Gelato batches
-        Stock->>COO: Check stock for Gelato batches
-        Stock->>FLO: Check stock for Gelato batches
-    end
-    
-    MUV-->>Stock: Store availability
-    TRU-->>Stock: Store availability
-    COO-->>Stock: Store availability
-    FLO-->>Stock: Store availability
-    
-    Stock->>Stock: Filter by distance<br/>Sort by nearest
-    Stock-->>Web: Results: 12 stores within 25 miles
-    Web-->>User: Display map + store list<br/>sorted by distance
+            <h3>Build Pipeline Phases</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Phase 1: Core Libraries</h4>
+                    <p>terprint-config, terprint-logger, Terprint (core library)</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Phase 2: Data Layer</h4>
+                    <p>terprint-data, terprint-python, menu downloader</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Phase 3: AI Services</h4>
+                    <p>terprint-ai-chat, recommender, deals, lab, health</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Phase 4: Integration</h4>
+                    <p>metering, communications, batch processor</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Phase 5: Marketplace</h4>
+                    <p>marketplace-webhook, Terprint.Web, deployment</p>
                 </div>
             </div>
             
-            <h3>Stock API Endpoints</h3>
+            <h3>Environments</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Endpoint</th>
-                        <th>Method</th>
-                        <th>Description</th>
+                        <th>Environment</th>
+                        <th>Trigger</th>
+                        <th>Approval</th>
+                        <th>Purpose</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>/api/stock/{dispensary}/{batch_id}</code></td>
-                        <td>GET</td>
-                        <td>Check stock for a specific product at all stores</td>
+                        <td>Development</td>
+                        <td>Automatic on PR merge</td>
+                        <td>None</td>
+                        <td>Feature testing</td>
                     </tr>
                     <tr>
-                        <td><code>/api/stock/{dispensary}</code></td>
-                        <td>POST</td>
-                        <td>Bulk stock check for multiple batch IDs</td>
+                        <td>Staging</td>
+                        <td>Automatic after dev</td>
+                        <td>None</td>
+                        <td>Integration testing</td>
                     </tr>
                     <tr>
-                        <td><code>/api/stock/search</code></td>
-                        <td>GET</td>
-                        <td>Search by strain name across all dispensaries</td>
+                        <td>Production</td>
+                        <td>Manual promotion</td>
+                        <td>Required</td>
+                        <td>Live customers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Governance -->
+        <section id="governance">
+            <h2><span class="icon">📋</span> Governance Framework</h2>
+            
+            <h3>CMMI Level 3 Alignment</h3>
+            <p style="margin-bottom: 20px;">
+                Target: CMMI Level 3 (Defined) - Standardized processes across the organization with quantitative process management.
+            </p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>📝 Requirements Management</h4>
+                    <p>Azure DevOps work items with area paths, epics, features, and user stories following standard templates.</p>
+                </div>
+                <div class="card">
+                    <h4>⚙️ Project Planning</h4>
+                    <p>Sprint planning with velocity tracking, capacity management, and iteration paths.</p>
+                </div>
+                <div class="card">
+                    <h4>🔍 Quality Assurance</h4>
+                    <p>Code review required, minimum 80% coverage, automated testing in CI/CD pipeline.</p>
+                </div>
+                <div class="card">
+                    <h4>📊 Process Measurement</h4>
+                    <p>DORA metrics tracking: deployment frequency, lead time, MTTR, change failure rate.</p>
+                </div>
+            </div>
+            
+            <h3>Key Performance Indicators</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Target</th>
+                        <th>Current</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Deployment Frequency</td>
+                        <td>2-3 per week</td>
+                        <td>✅ On target</td>
+                    </tr>
+                    <tr>
+                        <td>Lead Time for Changes</td>
+                        <td>&lt; 4 hours</td>
+                        <td>✅ On target</td>
+                    </tr>
+                    <tr>
+                        <td>Change Failure Rate</td>
+                        <td>&lt; 5%</td>
+                        <td>✅ On target</td>
+                    </tr>
+                    <tr>
+                        <td>Mean Time to Recovery</td>
+                        <td>&lt; 2 hours</td>
+                        <td>✅ On target</td>
+                    </tr>
+                    <tr>
+                        <td>Code Coverage</td>
+                        <td>&gt; 80%</td>
+                        <td>⚠️ 75%</td>
+                    </tr>
+                    <tr>
+                        <td>System Uptime</td>
+                        <td>99.9%</td>
+                        <td>✅ 99.95%</td>
                     </tr>
                 </tbody>
             </table>
             
-            <h3>Response Includes</h3>
+            <h3>Security Policies</h3>
             <ul>
-                <li><strong>Stock Status:</strong> In stock / Out of stock at each store</li>
-                <li><strong>Store Locations:</strong> Full address, lat/lng coordinates</li>
-                <li><strong>Distance:</strong> Miles from user (when location provided)</li>
-                <li><strong>Product Details:</strong> THC%, CBD%, price, category</li>
-                <li><strong>Store Info:</strong> Phone, hours, direct link to dispensary website</li>
+                <li><strong>Authentication:</strong> All services use Managed Identities - no secrets in code</li>
+                <li><strong>Secrets:</strong> Azure Key Vault with rotation policies</li>
+                <li><strong>Encryption:</strong> TLS 1.2+ in transit, encrypted at rest</li>
+                <li><strong>Access Control:</strong> RBAC with principle of least privilege</li>
+                <li><strong>Scanning:</strong> Dependency scanning, SAST in CI pipeline</li>
+                <li><strong>Audit:</strong> Azure Activity Logs, compliance reporting</li>
             </ul>
-        </section>
-        
-        <!-- DevOps Structure - DevOps -->
-        <section data-audience="devops" id="devops-structure">
-            <h2>DevOps Structure <span class="audience-badge badge-devops">DevOps</span></h2>
-            
-            <div class="diagram-container">
-                <div class="mermaid">
-graph TB
-    subgraph Repos["Repositories"]
-        R1[terprint-config]
-        R2[menu-downloader]
-        R3[coa-extractor]
-        R4[terprint-website]
-    end
-    
-    subgraph DevOps["Azure DevOps"]
-        P1[Build Pipelines]
-        P2[Release Pipelines]
-        A1[Artifacts Feed]
-    end
-    
-    subgraph Azure["Azure Resources"]
-        RG[Resource Group]
-        FA[Function Apps]
-        ST[Storage Accounts]
-        KV[Key Vault]
-    end
-    
-    R1 --> P1
-    R2 --> P1
-    R3 --> P1
-    R4 --> P1
-    P1 --> A1
-    A1 --> P2
-    P2 --> RG
-    RG --> FA
-    RG --> ST
-    RG --> KV
-                </div>
-            </div>
         </section>
         
         <footer>
-            <p>© 2025 Acidni, LLC - All Rights Reserved</p>
-            <p>Last Updated: <span id="lastUpdated"></span></p>
+            <p class="copyright">© 2025 Acidni, LLC - All Rights Reserved</p>
+            <p>Architecture Documentation v2.0 | Last Updated: December 2025</p>
+            <p style="margin-top: 15px;">
+                <a href="https://acidni.com" style="color: var(--accent-primary);">acidni.com</a> |
+                <a href="https://terprint.com" style="color: var(--accent-primary);">terprint.com</a>
+            </p>
         </footer>
     </div>
     
     <script>
-        // Audience descriptions
-        const audienceDescriptions = {
-            'all': 'Viewing complete documentation for all audiences. Select a specific role above to filter content.',
-            'developer': '👨‍💻 Developer View: Showing code structure, APIs, technical implementation details, and local development setup.',
-            'devops': '🔧 DevOps View: Showing deployment pipelines, CI/CD configuration, infrastructure, and operational details.',
-            'data_analyst': '📊 Data Analyst View: Showing data schemas, query patterns, Power BI integration, and analytics information.',
-            'business_stakeholder': '💼 Business View: Showing system capabilities, coverage, costs, and high-level overview.',
-            'security_auditor': '🔒 Security View: Showing identity management, secrets handling, compliance, and security architecture.',
-            'user': '👤 User View: Showing website features, how to use the system, and practical guidance.',
-            'customer': '🛒 Customer View: Showing product information, pricing, benefits, and getting started information.'
-        };
-        
-        function filterByAudience() {
-            const selected = document.getElementById('audienceSelect').value;
-            const sections = document.querySelectorAll('section[data-audience]');
-            const descriptionEl = document.getElementById('audienceDescription');
-            
-            // Update description
-            descriptionEl.textContent = audienceDescriptions[selected] || audienceDescriptions['all'];
-            
-            sections.forEach(section => {
-                const audiences = section.getAttribute('data-audience').split(' ');
-                
-                if (selected === 'all' || audiences.includes('all') || audiences.includes(selected)) {
-                    section.classList.remove('hidden');
-                } else {
-                    section.classList.add('hidden');
-                }
-            });
-        }
-        
         // Initialize Mermaid
         mermaid.initialize({
             startOnLoad: true,
             theme: 'dark',
             themeVariables: {
-                primaryColor: '#e94560',
-                primaryTextColor: '#eaeaea',
-                primaryBorderColor: '#533483',
-                lineColor: '#a0a0a0',
-                secondaryColor: '#16213e',
-                tertiaryColor: '#0f3460',
-                background: '#1a1a2e',
-                mainBkg: '#16213e',
-                secondBkg: '#0f3460',
+                primaryColor: '#00d4ff',
+                primaryTextColor: '#ffffff',
+                primaryBorderColor: '#7c3aed',
+                lineColor: '#b0b0c0',
+                secondaryColor: '#1a1a2e',
+                tertiaryColor: '#16213e',
+                background: '#0f0f1a',
+                mainBkg: '#1a1a2e',
+                secondBkg: '#16213e',
                 border1: '#2a2a4a',
-                border2: '#533483',
-                arrowheadColor: '#e94560',
-                fontFamily: 'Segoe UI, sans-serif',
+                border2: '#7c3aed',
+                arrowheadColor: '#00d4ff',
+                fontFamily: 'Inter, Segoe UI, sans-serif',
                 fontSize: '14px',
-                textColor: '#eaeaea',
-                actorTextColor: '#eaeaea',
-                actorLineColor: '#a0a0a0'
+                textColor: '#ffffff',
+                actorTextColor: '#ffffff',
+                actorLineColor: '#b0b0c0'
             },
             flowchart: {
                 useMaxWidth: true,
@@ -1014,11 +1404,20 @@ graph TB
             }
         });
         
-        // Set last updated date
-        document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Update active state
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     </script>
 </body>
