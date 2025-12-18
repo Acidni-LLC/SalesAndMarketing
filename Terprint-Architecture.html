@@ -405,8 +405,8 @@
         <header>
             <div class="logo">Acidni, LLC</div>
             <h1>Enterprise Architecture</h1>
-            <p class="subtitle">Multi-Product Platform with Shared Services & CMMI Governance</p>
-            <span class="version-badge">Version 2.0 | December 2025</span>
+            <p class="subtitle">Terprint Platform with Shared Services & CMMI Governance</p>
+            <span class="version-badge">Version 2.1 | December 2025</span>
         </header>
         
         <nav>
@@ -415,7 +415,6 @@
             <a href="#products">Products</a>
             <a href="#shared-services">Shared Services</a>
             <a href="#terprint">Terprint</a>
-            <a href="#mobilemech">MobileMech</a>
             <a href="#tech-stack">Tech Stack</a>
             <a href="#devops">DevOps</a>
             <a href="#governance">Governance</a>
@@ -432,8 +431,8 @@
             
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="number">2</div>
-                    <div class="label">Products</div>
+                    <div class="number">1</div>
+                    <div class="label">Product</div>
                 </div>
                 <div class="stat-card">
                     <div class="number">22+</div>
@@ -454,11 +453,10 @@
             </div>
             
             <div class="feature-highlight">
-                <h4>🆕 What's New in v2.0</h4>
+                <h4>🆕 What's New in v2.1</h4>
                 <ul>
-                    <li><strong>Enterprise Architecture:</strong> Configuration inheritance model for multi-product management</li>
-                    <li><strong>MobileMech Product:</strong> New platform for mobile service businesses</li>
-                    <li><strong>Shared Services:</strong> Extracted Communications, API Gateway, Marketplace to enterprise level</li>
+                    <li><strong>Enterprise Architecture:</strong> Configuration inheritance model for scalable product management</li>
+                    <li><strong>Shared Services:</strong> Communications, API Gateway, Marketplace at enterprise level</li>
                     <li><strong>CMMI Governance:</strong> Level 3 aligned processes and KPIs</li>
                     <li><strong>Entra ID App-to-App Auth:</strong> Service mesh authentication pattern</li>
                 </ul>
@@ -485,11 +483,6 @@ graph TB
             TCS[Terprint Components]
         end
         
-        subgraph MobileMech["MobileMech"]
-            MC[mobilemech/product.yaml]
-            MCS[MobileMech Components]
-        end
-        
         subgraph Future["Future Products"]
             FP[product-template/]
         end
@@ -504,21 +497,16 @@ graph TB
     end
     
     EC --> TC
-    EC --> MC
     EC --> FP
     ED --> TC
-    ED --> MC
     SS --> SharedServices
     
     TC --> TCS
-    MC --> MCS
     
     TCS --> COMM
     TCS --> APIM
     TCS --> MKT
-    MCS --> COMM
-    MCS --> APIM
-    MCS --> ID
+    TCS --> ID
                 </div>
             </div>
             
@@ -610,12 +598,7 @@ graph TB
                     <span class="badge badge-active">Active</span>
                 </div>
                 <div class="card">
-                    <h4>🔧 MobileMech</h4>
-                    <p>Mobile service business management. Website, AI booking, SMS scheduling, invoicing, and customer management for mobile mechanics and service providers.</p>
-                    <span class="badge badge-planning">Planning</span>
-                </div>
-                <div class="card">
-                    <h4>🚀 Future Products</h4>
+                    <h4> Future Products</h4>
                     <p>New products can be created using the product-template with standardized structure, shared services access, and inherited enterprise configuration.</p>
                     <span class="badge badge-enterprise">Enterprise Ready</span>
                 </div>
@@ -662,7 +645,6 @@ graph TB
 graph TB
     subgraph Products["Products"]
         TP[Terprint]
-        MM[MobileMech]
         FP[Future Products]
     end
     
@@ -697,7 +679,6 @@ graph TB
     end
     
     TP --> Gateway
-    MM --> Gateway
     FP --> Gateway
     
     Gateway --> Comm
@@ -705,7 +686,6 @@ graph TB
     Gateway --> Observe
     
     TP -.-> Identity
-    MM -.-> Identity
     FP -.-> Identity
                 </div>
             </div>
@@ -894,144 +874,6 @@ sequenceDiagram
     AI-->>Web: AI responses
                 </div>
             </div>
-        </section>
-        
-        <!-- MobileMech -->
-        <section id="mobilemech">
-            <h2><span class="icon">🔧</span> MobileMech Platform</h2>
-            
-            <p style="margin-bottom: 25px;">
-                Comprehensive business management platform for mobile mechanics, auto detailers, and field service providers.
-                End-to-end solution for scheduling, customer management, and business operations.
-            </p>
-            
-            <h3>Target Market</h3>
-            <ul>
-                <li><strong>Mobile Mechanics:</strong> On-site auto repair and maintenance</li>
-                <li><strong>Auto Detailers:</strong> Mobile car wash and detailing services</li>
-                <li><strong>Field Service:</strong> Pet groomers, notary services, mobile health</li>
-            </ul>
-            
-            <h3>Core Features</h3>
-            <div class="cards-grid">
-                <div class="card">
-                    <h4>🌐 Website Builder</h4>
-                    <p>Professional landing pages with service listings, pricing, coverage areas, and online booking integration.</p>
-                </div>
-                <div class="card">
-                    <h4>🤖 AI Booking</h4>
-                    <p>Intelligent scheduling that considers travel time, service duration, and technician availability.</p>
-                </div>
-                <div class="card">
-                    <h4>📱 SMS System</h4>
-                    <p>Two-way text messaging for booking confirmations, reminders, and customer communication.</p>
-                </div>
-                <div class="card">
-                    <h4>📅 Scheduling</h4>
-                    <p>Visual calendar with route optimization, availability management, and recurring appointments.</p>
-                </div>
-                <div class="card">
-                    <h4>💰 Invoicing</h4>
-                    <p>Professional invoices, payment processing, and basic accounting/expense tracking.</p>
-                </div>
-                <div class="card">
-                    <h4>👥 CRM</h4>
-                    <p>Customer database, vehicle history, service records, and communication logs.</p>
-                </div>
-            </div>
-            
-            <h3>Planned Architecture</h3>
-            <div class="diagram-container">
-                <div class="mermaid">
-graph TB
-    subgraph Customers["👤 Customers"]
-        CW[Customer Website]
-        SMS[SMS/Text]
-        APP[Mobile App]
-    end
-    
-    subgraph Core["🔧 MobileMech Core"]
-        WEB[Web Portal]
-        API[Core API]
-        BOOK[Booking Engine]
-        SCHED[Scheduler]
-        INV[Invoicing]
-        CRM[CRM Module]
-    end
-    
-    subgraph AI["🤖 AI Services"]
-        AIBOOK[AI Booking Assistant]
-        AIROUTE[Route Optimizer]
-    end
-    
-    subgraph Shared["🔗 Shared Services"]
-        COMM[Communications]
-        PAY[Payment Processing]
-        MAPS[Azure Maps]
-    end
-    
-    subgraph Data["💾 Data"]
-        SQL[Azure SQL]
-        REDIS[Redis Cache]
-    end
-    
-    Customers --> WEB
-    Customers --> SMS
-    SMS --> COMM
-    
-    WEB --> API
-    API --> BOOK
-    API --> SCHED
-    API --> INV
-    API --> CRM
-    
-    BOOK --> AIBOOK
-    SCHED --> AIROUTE
-    
-    API --> SQL
-    API --> REDIS
-    INV --> PAY
-    SCHED --> MAPS
-                </div>
-            </div>
-            
-            <h3>SaaS Pricing Tiers</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tier</th>
-                        <th>Target</th>
-                        <th>Features</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Starter</strong></td>
-                        <td>Solo operators</td>
-                        <td>Basic booking, invoicing, 100 SMS/mo</td>
-                        <td>$29/mo</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Professional</strong></td>
-                        <td>Growing businesses</td>
-                        <td>Full scheduling, CRM, 500 SMS/mo, website</td>
-                        <td>$79/mo</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Business</strong></td>
-                        <td>Multi-technician teams</td>
-                        <td>Team management, route optimization, 2000 SMS/mo</td>
-                        <td>$149/mo</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Enterprise</strong></td>
-                        <td>Franchises</td>
-                        <td>White-label, API access, unlimited SMS</td>
-                        <td>Custom</td>
-                    </tr>
-                </tbody>
-            </table>
         </section>
         
         <!-- Technology Stack -->
@@ -1360,7 +1202,7 @@ graph TB
         
         <footer>
             <p class="copyright">© 2025 Acidni, LLC - All Rights Reserved</p>
-            <p>Architecture Documentation v2.0 | Last Updated: December 2025</p>
+            <p>Architecture Documentation v2.1 | Last Updated: December 2025</p>
             <p style="margin-top: 15px;">
                 <a href="https://acidni.com" style="color: var(--accent-primary);">acidni.com</a> |
                 <a href="https://terprint.com" style="color: var(--accent-primary);">terprint.com</a>
