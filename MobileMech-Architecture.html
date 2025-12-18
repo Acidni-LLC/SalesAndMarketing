@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobileMech Platform Architecture v1.0 | December 2025</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y614KCC85K"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-Y614KCC85K');
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --bg-card: #1e1e36;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0c0;
+            --text-muted: #707090;
+            --accent-primary: #f59e0b;
+            --accent-secondary: #ef4444;
+            --accent-tertiary: #22c55e;
+            --accent-info: #00d4ff;
+            --border: #2a2a4a;
+            --gradient-1: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --gradient-2: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+            --gradient-3: linear-gradient(135deg, #22c55e 0%, #f59e0b 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 0;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 50px;
+        }
+        
+        .logo {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent-primary);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--gradient-2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #f59e0b30;
+            color: #f59e0b;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+        }
+        
+        nav a {
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        nav a:hover, nav a.active {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+        }
+        
+        /* Section */
+        section {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+        }
+        
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        section h2 .icon {
+            font-size: 1.5rem;
+        }
+        
+        section h3 {
+            font-size: 1.4rem;
+            color: var(--accent-primary);
+            margin: 30px 0 20px 0;
+        }
+        
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.1);
+        }
+        
+        .card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .card .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .badge-active { background: #22c55e30; color: #22c55e; }
+        .badge-planned { background: #00d4ff30; color: #00d4ff; }
+        .badge-planning { background: #f59e0b30; color: #f59e0b; }
+        .badge-mvp { background: #7c3aed30; color: #7c3aed; }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-card .label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        /* Diagram Container */
+        .diagram-container {
+            background: var(--bg-tertiary);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        tr:hover {
+            background: rgba(245, 158, 11, 0.05);
+        }
+        
+        td code {
+            background: var(--bg-tertiary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-tertiary);
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin: 10px 0;
+            color: var(--text-secondary);
+        }
+        
+        li strong {
+            color: var(--text-primary);
+        }
+        
+        /* Feature Highlight */
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+            border-left: 4px solid var(--accent-primary);
+            padding: 25px 30px;
+            border-radius: 0 16px 16px 0;
+            margin: 25px 0;
+        }
+        
+        .feature-highlight h4 {
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-1);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            border: 3px solid var(--bg-secondary);
+        }
+        
+        .timeline-item h4 {
+            color: var(--accent-primary);
+            margin-bottom: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+            color: var(--text-secondary);
+        }
+        
+        footer .copyright {
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            h1 { font-size: 2.2rem; }
+            section { padding: 25px; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Acidni, LLC</div>
+            <h1>MobileMech Platform</h1>
+            <p class="subtitle">Mobile Service Business Management Platform</p>
+            <span class="version-badge">Version 1.0 | December 2025</span>
+            <span class="status-badge">🚧 Planning Phase</span>
+        </header>
+        
+        <nav>
+            <a href="#overview" class="active">Overview</a>
+            <a href="#market">Market</a>
+            <a href="#features">Features</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#tech-stack">Tech Stack</a>
+            <a href="#roadmap">Roadmap</a>
+        </nav>
+        
+        <!-- Executive Overview -->
+        <section id="overview">
+            <h2><span class="icon">🔧</span> Executive Overview</h2>
+            
+            <p style="font-size: 1.1rem; margin-bottom: 30px;">
+                MobileMech is a comprehensive SaaS platform designed for mobile service businesses. 
+                From mobile mechanics to auto detailers and field service providers, MobileMech provides 
+                end-to-end business management including booking, scheduling, invoicing, and customer relationship management.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="number">6</div>
+                    <div class="label">Core Modules</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">4</div>
+                    <div class="label">Pricing Tiers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">2</div>
+                    <div class="label">AI Services</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">5</div>
+                    <div class="label">Shared Services</div>
+                </div>
+            </div>
+            
+            <div class="feature-highlight">
+                <h4>🎯 Product Vision</h4>
+                <ul>
+                    <li><strong>Problem:</strong> Mobile service businesses struggle with scheduling, customer management, and professional presence</li>
+                    <li><strong>Solution:</strong> All-in-one platform with website builder, AI booking, SMS communication, and invoicing</li>
+                    <li><strong>Differentiator:</strong> AI-powered route optimization and intelligent scheduling for field service</li>
+                    <li><strong>Enterprise Integration:</strong> Inherits Acidni shared services (Communications, Identity, Observability)</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Target Market -->
+        <section id="market">
+            <h2><span class="icon">🎯</span> Target Market</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>🔧 Mobile Mechanics</h4>
+                    <p>On-site auto repair and maintenance professionals who travel to customers. Need scheduling, vehicle history tracking, and parts inventory.</p>
+                    <span class="badge badge-mvp">Primary Target</span>
+                </div>
+                <div class="card">
+                    <h4>🚗 Auto Detailers</h4>
+                    <p>Mobile car wash and detailing services. Need booking management, service packages, and recurring appointment scheduling.</p>
+                    <span class="badge badge-mvp">Primary Target</span>
+                </div>
+                <div class="card">
+                    <h4>🐕 Pet Groomers</h4>
+                    <p>Mobile pet grooming services. Need pet profiles, grooming history, and appointment reminders.</p>
+                    <span class="badge badge-planned">Future</span>
+                </div>
+                <div class="card">
+                    <h4>📝 Notary Services</h4>
+                    <p>Mobile notary public and signing agents. Need document management and appointment scheduling.</p>
+                    <span class="badge badge-planned">Future</span>
+                </div>
+                <div class="card">
+                    <h4>🏠 Home Services</h4>
+                    <p>Handyman, cleaning, and home maintenance services. Need job tracking and customer management.</p>
+                    <span class="badge badge-planned">Future</span>
+                </div>
+                <div class="card">
+                    <h4>🏥 Mobile Health</h4>
+                    <p>Home healthcare, mobile phlebotomy, and wellness services. Need HIPAA compliance and scheduling.</p>
+                    <span class="badge badge-planned">Future</span>
+                </div>
+            </div>
+            
+            <h3>Market Opportunity</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Segment</th>
+                        <th>US Market Size</th>
+                        <th>Growth Rate</th>
+                        <th>Target Share</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mobile Auto Services</td>
+                        <td>$12B</td>
+                        <td>8% CAGR</td>
+                        <td>0.1% = $12M ARR</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile Pet Services</td>
+                        <td>$8B</td>
+                        <td>12% CAGR</td>
+                        <td>0.1% = $8M ARR</td>
+                    </tr>
+                    <tr>
+                        <td>Field Service Management</td>
+                        <td>$5B</td>
+                        <td>15% CAGR</td>
+                        <td>0.1% = $5M ARR</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Core Features -->
+        <section id="features">
+            <h2><span class="icon">⭐</span> Core Features</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>🌐 Website Builder</h4>
+                    <p>Professional landing pages with service listings, pricing tables, coverage area maps, and integrated online booking. Mobile-responsive templates.</p>
+                    <span class="badge badge-mvp">MVP</span>
+                </div>
+                <div class="card">
+                    <h4>🤖 AI Booking</h4>
+                    <p>Intelligent scheduling assistant that considers travel time, service duration, technician skills, and availability. Natural language booking via chat.</p>
+                    <span class="badge badge-mvp">MVP</span>
+                </div>
+                <div class="card">
+                    <h4>📱 SMS System</h4>
+                    <p>Two-way text messaging for booking confirmations, appointment reminders, on-my-way notifications, and customer communication.</p>
+                    <span class="badge badge-mvp">MVP</span>
+                </div>
+                <div class="card">
+                    <h4>📅 Scheduling</h4>
+                    <p>Visual calendar with drag-and-drop, route optimization, availability management, recurring appointments, and team scheduling.</p>
+                    <span class="badge badge-mvp">MVP</span>
+                </div>
+                <div class="card">
+                    <h4>💰 Invoicing</h4>
+                    <p>Professional invoices, estimates, payment processing (Stripe/Square), expense tracking, and basic accounting reports.</p>
+                    <span class="badge badge-mvp">MVP</span>
+                </div>
+                <div class="card">
+                    <h4>👥 CRM</h4>
+                    <p>Customer database, vehicle/pet profiles, service history, communication logs, and automated follow-ups.</p>
+                    <span class="badge badge-mvp">MVP</span>
+                </div>
+            </div>
+            
+            <h3>AI-Powered Capabilities</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+graph LR
+    subgraph AI["🤖 AI Services"]
+        BOOK[AI Booking Assistant]
+        ROUTE[Route Optimizer]
+    end
+    
+    subgraph Inputs["📥 Inputs"]
+        CAL[Calendar Availability]
+        LOC[Customer Locations]
+        SVC[Service Durations]
+        TRAF[Traffic Data]
+    end
+    
+    subgraph Outputs["📤 Outputs"]
+        SCHED[Optimized Schedule]
+        ETA[Accurate ETAs]
+        SUGGEST[Smart Suggestions]
+        NOTIFY[Auto Notifications]
+    end
+    
+    Inputs --> AI
+    AI --> Outputs
+                </div>
+            </div>
+        </section>
+        
+        <!-- System Architecture -->
+        <section id="architecture">
+            <h2><span class="icon">🏗️</span> System Architecture</h2>
+            
+            <h3>Platform Overview</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+graph TB
+    subgraph Customers["👤 Customers"]
+        CW[Customer Website]
+        SMS[SMS/Text]
+        APP[Mobile App]
+    end
+    
+    subgraph Core["🔧 MobileMech Core"]
+        WEB[Web Portal]
+        API[Core API]
+        BOOK[Booking Engine]
+        SCHED[Scheduler]
+        INV[Invoicing]
+        CRM[CRM Module]
+    end
+    
+    subgraph AI["🤖 AI Services"]
+        AIBOOK[AI Booking Assistant]
+        AIROUTE[Route Optimizer]
+    end
+    
+    subgraph Shared["🔗 Acidni Shared Services"]
+        COMM[Communications]
+        PAY[Payment Processing]
+        MAPS[Azure Maps]
+        ID[Identity]
+        OBS[Observability]
+    end
+    
+    subgraph Data["💾 Data"]
+        SQL[Azure SQL]
+        REDIS[Redis Cache]
+        BLOB[Blob Storage]
+    end
+    
+    Customers --> WEB
+    Customers --> SMS
+    SMS --> COMM
+    
+    WEB --> API
+    API --> BOOK
+    API --> SCHED
+    API --> INV
+    API --> CRM
+    
+    BOOK --> AIBOOK
+    SCHED --> AIROUTE
+    
+    API --> SQL
+    API --> REDIS
+    INV --> PAY
+    SCHED --> MAPS
+    
+    Core --> OBS
+    Core --> ID
+                </div>
+            </div>
+            
+            <h3>Enterprise Integration</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+graph TB
+    subgraph Acidni["🏢 Acidni Enterprise"]
+        EC[enterprise.yaml]
+        
+        subgraph SharedSvc["Shared Services"]
+            COMM[Communications API]
+            APIM[API Gateway]
+            ENTRA[Entra ID]
+            APPINS[App Insights]
+        end
+    end
+    
+    subgraph MobileMech["🔧 MobileMech Product"]
+        PC[product.yaml]
+        
+        subgraph Components["Components"]
+            WEB[Web Portal]
+            API[Core API]
+            AIBOOK[AI Booking]
+            AIROUTE[Route Optimizer]
+        end
+    end
+    
+    EC --> PC
+    SharedSvc --> Components
+    
+    PC --> Components
+                </div>
+            </div>
+            
+            <h3>Component Registry</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Type</th>
+                        <th>Technology</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>mobilemech-web</code></td>
+                        <td>Web Application</td>
+                        <td>Blazor / .NET 8</td>
+                        <td>🚧 Planned</td>
+                    </tr>
+                    <tr>
+                        <td><code>mobilemech-api</code></td>
+                        <td>REST API</td>
+                        <td>Azure Functions / .NET 8</td>
+                        <td>🚧 Planned</td>
+                    </tr>
+                    <tr>
+                        <td><code>mobilemech-ai-booking</code></td>
+                        <td>AI Service</td>
+                        <td>Azure Functions / Python</td>
+                        <td>🚧 Planned</td>
+                    </tr>
+                    <tr>
+                        <td><code>mobilemech-ai-router</code></td>
+                        <td>AI Service</td>
+                        <td>Azure Functions / Python</td>
+                        <td>🚧 Planned</td>
+                    </tr>
+                    <tr>
+                        <td><code>mobilemech-websites</code></td>
+                        <td>Static Sites</td>
+                        <td>Azure Static Web Apps</td>
+                        <td>🚧 Planned</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Pricing -->
+        <section id="pricing">
+            <h2><span class="icon">💳</span> SaaS Pricing Tiers</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>🌱 Starter</h4>
+                    <p><strong style="font-size: 2rem; color: var(--accent-primary);">$29</strong><span style="color: var(--text-muted);">/month</span></p>
+                    <ul style="margin-top: 20px;">
+                        <li>Basic online booking</li>
+                        <li>Simple invoicing</li>
+                        <li>100 SMS/month</li>
+                        <li>Customer database</li>
+                        <li>Email support</li>
+                    </ul>
+                    <span class="badge badge-mvp">Solo Operators</span>
+                </div>
+                <div class="card" style="border-color: var(--accent-primary);">
+                    <h4>⭐ Professional</h4>
+                    <p><strong style="font-size: 2rem; color: var(--accent-primary);">$79</strong><span style="color: var(--text-muted);">/month</span></p>
+                    <ul style="margin-top: 20px;">
+                        <li>Full scheduling system</li>
+                        <li>Complete CRM</li>
+                        <li>500 SMS/month</li>
+                        <li>Professional website</li>
+                        <li>Route optimization</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <span class="badge badge-active">Most Popular</span>
+                </div>
+                <div class="card">
+                    <h4>🚀 Business</h4>
+                    <p><strong style="font-size: 2rem; color: var(--accent-primary);">$149</strong><span style="color: var(--text-muted);">/month</span></p>
+                    <ul style="margin-top: 20px;">
+                        <li>Team management (5 users)</li>
+                        <li>Advanced route optimization</li>
+                        <li>2,000 SMS/month</li>
+                        <li>AI booking assistant</li>
+                        <li>Custom branding</li>
+                        <li>Phone support</li>
+                    </ul>
+                    <span class="badge badge-planning">Multi-Tech Teams</span>
+                </div>
+                <div class="card">
+                    <h4>🏢 Enterprise</h4>
+                    <p><strong style="font-size: 2rem; color: var(--accent-primary);">Custom</strong></p>
+                    <ul style="margin-top: 20px;">
+                        <li>White-label solution</li>
+                        <li>API access</li>
+                        <li>Unlimited SMS</li>
+                        <li>Unlimited users</li>
+                        <li>Custom integrations</li>
+                        <li>Dedicated support</li>
+                    </ul>
+                    <span class="badge badge-planned">Franchises</span>
+                </div>
+            </div>
+            
+            <h3>Revenue Model</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Revenue Stream</th>
+                        <th>Model</th>
+                        <th>Projected %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Subscription Revenue</td>
+                        <td>Monthly SaaS fees</td>
+                        <td>70%</td>
+                    </tr>
+                    <tr>
+                        <td>SMS Overage</td>
+                        <td>$0.03/message over limit</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Processing</td>
+                        <td>0.5% transaction fee</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td>Add-ons</td>
+                        <td>Premium features</td>
+                        <td>5%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Tech Stack -->
+        <section id="tech-stack">
+            <h2><span class="icon">⚡</span> Technology Stack</h2>
+            
+            <h3>Inherited from Acidni Enterprise</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Technology</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cloud</td>
+                        <td>Microsoft Azure</td>
+                        <td>All infrastructure</td>
+                    </tr>
+                    <tr>
+                        <td>Identity</td>
+                        <td>Azure Entra ID</td>
+                        <td>Authentication & RBAC</td>
+                    </tr>
+                    <tr>
+                        <td>Communications</td>
+                        <td>Azure Communication Services</td>
+                        <td>Email & SMS</td>
+                    </tr>
+                    <tr>
+                        <td>Monitoring</td>
+                        <td>Application Insights</td>
+                        <td>Telemetry & diagnostics</td>
+                    </tr>
+                    <tr>
+                        <td>Secrets</td>
+                        <td>Azure Key Vault</td>
+                        <td>Secrets management</td>
+                    </tr>
+                    <tr>
+                        <td>DevOps</td>
+                        <td>Azure DevOps</td>
+                        <td>CI/CD pipelines</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>MobileMech-Specific Technologies</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>🌐 Frontend</h4>
+                    <ul>
+                        <li>Blazor Server (.NET 8)</li>
+                        <li>Tailwind CSS</li>
+                        <li>PWA for mobile</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>⚙️ Backend</h4>
+                    <ul>
+                        <li>Azure Functions (.NET 8)</li>
+                        <li>Azure SQL Database</li>
+                        <li>Redis Cache</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🤖 AI/ML</h4>
+                    <ul>
+                        <li>Azure OpenAI (GPT-4)</li>
+                        <li>Azure Maps (routing)</li>
+                        <li>Custom ML models</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>💳 Payments</h4>
+                    <ul>
+                        <li>Stripe Connect</li>
+                        <li>Square integration</li>
+                        <li>Invoice generation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Roadmap -->
+        <section id="roadmap">
+            <h2><span class="icon">🗺️</span> Development Roadmap</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Q1 2025 - Foundation</h4>
+                    <p>Product definition, architecture design, enterprise integration planning</p>
+                    <span class="badge badge-active">Current</span>
+                </div>
+                <div class="timeline-item">
+                    <h4>Q2 2025 - MVP Development</h4>
+                    <p>Core booking, scheduling, basic invoicing, customer database</p>
+                    <span class="badge badge-planned">Planned</span>
+                </div>
+                <div class="timeline-item">
+                    <h4>Q3 2025 - Beta Launch</h4>
+                    <p>Website builder, SMS integration, payment processing, beta testing</p>
+                    <span class="badge badge-planned">Planned</span>
+                </div>
+                <div class="timeline-item">
+                    <h4>Q4 2025 - AI Features</h4>
+                    <p>AI booking assistant, route optimization, public launch</p>
+                    <span class="badge badge-planned">Planned</span>
+                </div>
+                <div class="timeline-item">
+                    <h4>2026 - Scale</h4>
+                    <p>Team features, enterprise tier, marketplace integrations, mobile app</p>
+                    <span class="badge badge-planned">Future</span>
+                </div>
+            </div>
+            
+            <h3>Success Metrics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Year 1 Target</th>
+                        <th>Year 3 Target</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monthly Active Users</td>
+                        <td>500</td>
+                        <td>5,000</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Recurring Revenue</td>
+                        <td>$25K</td>
+                        <td>$500K</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Churn Rate</td>
+                        <td>&lt; 5%</td>
+                        <td>&lt; 3%</td>
+                    </tr>
+                    <tr>
+                        <td>NPS Score</td>
+                        <td>40+</td>
+                        <td>60+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <footer>
+            <p class="copyright">© 2025 Acidni, LLC - All Rights Reserved</p>
+            <p>MobileMech Architecture v1.0 | Last Updated: December 2025</p>
+            <p style="margin-top: 15px;">
+                <a href="https://acidni.com" style="color: var(--accent-primary);">acidni.com</a> |
+                Part of the Acidni Enterprise Platform
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#f59e0b',
+                primaryTextColor: '#ffffff',
+                primaryBorderColor: '#ef4444',
+                lineColor: '#b0b0c0',
+                secondaryColor: '#1a1a2e',
+                tertiaryColor: '#16213e',
+                background: '#0f0f1a',
+                mainBkg: '#1a1a2e',
+                secondBkg: '#16213e',
+                border1: '#2a2a4a',
+                border2: '#ef4444',
+                arrowheadColor: '#f59e0b',
+                fontFamily: 'Inter, Segoe UI, sans-serif',
+                fontSize: '14px',
+                textColor: '#ffffff',
+                actorTextColor: '#ffffff',
+                actorLineColor: '#b0b0c0'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                useMaxWidth: true,
+                boxMargin: 10,
+                mirrorActors: false
+            }
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Update active state
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
